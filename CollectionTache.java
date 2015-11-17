@@ -16,6 +16,17 @@ public class CollectionTache
     codex.add(p);
   }
 
+  public void afficheCollection()
+  {
+    int size=codex.size();
+    System.out.println(size+" tâche(s) restante(s) :");
+    int i=0;
+    while(i<size){
+      System.out.println(codex.get(i).toString());
+      ++i;
+    }
+
+  }
 
   /*
   TODO: une méthode qui :
