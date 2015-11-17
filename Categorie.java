@@ -12,13 +12,31 @@ public class Categorie
 		v.add("Sans Categorie");
 		v.add("Personnel");
 		v.add("Travail");
+		//TODO: remplir avec fichier contenant liste catégories -> sinon créer+remplir
 	}
 
+	public String get(int i)
+	{
+		int size=v.size();
+		if(i<size)
+			return v.get(i);
+		else
+			return v.get(0);
+	}
+	public int taille()
+	{
+		return v.size();
+	}
+	public boolean contient(String type)
+	{
+		return v.contains(type);
+	}
 	public void ajout(String type)
 	{
-		v.add(type);
+		if(!v.contains(type))
+			v.add(type);
+		//TODO: ajouter au fichier de catégories
 	}
-
 	public void retrait(String type)
 	{
 		if(v.contains(type))
