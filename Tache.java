@@ -1,7 +1,9 @@
 package todoList;
 
-java.util.Date;
-java.lang.String;
+import java.util.Date;
+import java.lang.String;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public abstract class Tache
 {
@@ -11,18 +13,23 @@ public abstract class Tache
 	protected float avancement;
 	protected String categorie;
 
+
+	//Rmq: On ne peut pas créer de tache avec date de début sans catégorie.
+	//TODO: Ajouter la catégorie aux Categorie si elle n'existe pas déjà
+
 	public Tache(String fin, String titre)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     try{
 			Date dateF = formatter.parse(fin);
+			dateDeb = new Date();
+			echeance = new Date();
+			echeance.setTime(dateF.getTime());
     }catch(ParseException e){
     	e.printStackTrace();
   	}
-		dateDeb = new Date();
-		echeance = dateF;
 		intitule = titre;
-		avancement = 0,0;
+		avancement = 0;
 		categorie = "Sans Categorie";
 	}
 
@@ -31,44 +38,29 @@ public abstract class Tache
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     try{
 			Date dateF = formatter.parse(fin);
+			dateDeb = new Date();
+			echeance.setTime(dateF.getTime());
     }catch(ParseException e){
     	e.printStackTrace();
   	}
-		dateDeb = new Date();
-		echeance = dateF;
 		intitule = titre;
-		avancement = 0,0;
+		avancement = 0;
 		categorie = cat;
 	}
 
-	public Tache(String deb, String fin, String titre)
-	{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    try{
-    	Date dateD = formatter.parse(deb);
-			Date dateF = formatter.parse(fin);
-    }catch(ParseException e){
-    	e.printStackTrace();
-  	}
-		dateDeb = dateD;
-		echeance = dateF;
-		intitule = titre;
-		avancement = 0,0;
-		categorie = "Sans Categorie";
-	}
 	public Tache(String deb, String fin, String titre, String cat)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		try{
 			Date dateD = formatter.parse(deb);
 			Date dateF = formatter.parse(fin);
+			dateDeb.setTime(dateD.getTime());
+			echeance.setTime(dateF.getTime());
 		}catch(ParseException e){
 			e.printStackTrace();
 		}
-		dateDeb = dateD;
-		echeance = dateF;
 		intitule = titre;
-		avancement=0,0;
+		avancement=0;
 		categorie=cat;
 	}
 
@@ -82,8 +74,8 @@ public abstract class Tache
 	}
 	public void modification_echeance(Date fin)
 	{
-		if(dateDeb < fin){
-			echeance=fin;
+		if(dateDeb.before(fin)){
+			echeance.setTime(fin.getTime());
 		}
 		else{
 			System.out.println("Erreur dans la saisie de l'échéance.");
@@ -94,8 +86,11 @@ public abstract class Tache
 
 	public String toString()
   {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
 		return intitule+", de catégorie "+categorie+
-		", commence le "+dateDeb.toString()+" et fini le "+echeance.toString()+
-		" d'avancement évalué à "+avancement*100+"%.";
+		", commence le "+formatter.format(dateDeb)+
+		" et fini le "+formatter.format(echeance)+
+		" d'avancement évalué à "+avancement+"%";
 	}
 }

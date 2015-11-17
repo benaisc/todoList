@@ -13,8 +13,13 @@ public class TachePonctuelle extends Tache
     super(fin,titre,categorie);
   }
 
+
   public void setAvancement(int pourcentage)
   {
-    avancement=1;
+    if(pourcentage > 0)
+      avancement=1;
+      //TODO: archiver la tâche
+    else
+      avancement=0;
   }
 }

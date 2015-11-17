@@ -1,14 +1,10 @@
 package todoList;
 
-import java.util.Vector<E>;
+import java.util.Vector;
 
 public class Categorie
 {
-	protected String cat;
-
-
-
-
+	protected Vector<String> v;
 
 	public Categorie()
 	{
@@ -18,20 +14,20 @@ public class Categorie
 		v.add("Travail");
 	}
 
-	public void add(String type)
+	public void ajout(String type)
 	{
 		v.add(type);
 	}
 
-	public void remove(String type)
+	public void retrait(String type)
 	{
 		if(v.contains(type))
 			v.remove(type);
 		//TODO: vérifier+modifier les taches qui possédaient cette catégorie
 	}
 
-	public void toString()
+	public String toString()
 	{
-		System.out.println("Les différentes catégories sont "+v.toString());
+		return "Les différentes catégories sont "+v.toString();
 	}
 }
