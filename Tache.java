@@ -13,11 +13,8 @@ public abstract class Tache
 	protected float avancement;
 	protected Categorie categorie;
 
-	//Rmq Pratique : pour toutes les taches, si indice == indice(categoriemodifiée)..
 
 	//Rmq: On ne peut pas créer de tache avec date de début sans catégorie.
-
-	//TODO: Ajouter la catégorie aux Categorie si elle n'existe pas déjà
 
 	public Tache(String fin, String titre)
 	{
@@ -76,7 +73,7 @@ public abstract class Tache
 	public void modification_categorie(String s)
 	{
 		categorie.set(s);
-		//TODO:
+		//TODO : Accès aux Categories ??????????????????????????????????
 	}
 	public void modification_echeance(Date fin)
 	{
@@ -94,9 +91,12 @@ public abstract class Tache
   {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		return intitule+", de catégorie "+categorie.get()+
+		String s = intitule+", de catégorie "+categorie.get()+
 		", commence le "+formatter.format(dateDeb)+
-		" et fini le "+formatter.format(echeance)+
-		" d'avancement évalué à "+avancement+"%";
+		" et fini le "+formatter.format(echeance);
+		if(this instanceof TacheLongCours)
+			s+=" d'avancement évalué à "+avancement+"%";
+
+		return s;
 	}
 }
