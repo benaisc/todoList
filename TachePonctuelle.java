@@ -4,17 +4,17 @@ package todoList;
 public class TachePonctuelle extends Tache
 {
 
-  public TachePonctuelle(String fin, String titre, int num)
+  public TachePonctuelle(String fin, String titre)
   {
-    super(fin,titre,num);
+    super(fin,titre);
   }
   public TachePonctuelle(String fin, String titre, String categorie)
   {
     super(fin,titre,categorie);
   }
 
-  
-  public void setAvancement(int pourcentage)
+
+  public void setAvancement(float pourcentage)
   {
     if(pourcentage > 0)
       avancement=1;

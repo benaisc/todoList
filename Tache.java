@@ -11,8 +11,7 @@ public abstract class Tache
 	protected Date echeance;
 	protected String intitule;
 	protected float avancement;
-	protected Categorie categories;
-	protected int categorie;
+	protected Categorie categorie;
 
 	//Rmq Pratique : pour toutes les taches, si indice == indice(categoriemodifiée)..
 
@@ -20,7 +19,7 @@ public abstract class Tache
 
 	//TODO: Ajouter la catégorie aux Categorie si elle n'existe pas déjà
 
-	public Tache(String fin, String titre, int numCat)
+	public Tache(String fin, String titre)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     try{
@@ -31,8 +30,7 @@ public abstract class Tache
     }catch(ParseException e){
     	e.printStackTrace();
   	}
-		categories=new Categorie();
-		categorie=numCat;
+		categorie=new Categorie();
 		intitule = titre;
 		avancement = 0;
 	}
@@ -43,13 +41,12 @@ public abstract class Tache
     try{
 			Date dateF = formatter.parse(fin);
 			dateDeb = new Date();
+			echeance = new Date();
 			echeance.setTime(dateF.getTime());
     }catch(ParseException e){
     	e.printStackTrace();
   	}
-		categories=new Categorie();
-		categories.ajout(cat);
-		categorie=categories.taille()-1;
+		categorie=new Categorie(cat);
 		intitule = titre;
 		avancement = 0;
 	}
@@ -60,31 +57,14 @@ public abstract class Tache
 		try{
 			Date dateD = formatter.parse(deb);
 			Date dateF = formatter.parse(fin);
+			dateDeb = new Date();
 			dateDeb.setTime(dateD.getTime());
+			echeance = new Date();
 			echeance.setTime(dateF.getTime());
 		}catch(ParseException e){
 			e.printStackTrace();
 		}
-		categories=new Categorie();
-		categories.ajout(cat);
-		categorie=categories.taille()-1;
-		intitule = titre;
-		avancement=0;
-	}
-
-	public Tache(String deb, String fin, String titre, int numCat)
-	{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		try{
-			Date dateD = formatter.parse(deb);
-			Date dateF = formatter.parse(fin);
-			dateDeb.setTime(dateD.getTime());
-			echeance.setTime(dateF.getTime());
-		}catch(ParseException e){
-			e.printStackTrace();
-		}
-		categories=new Categorie();
-		categorie=numCat;
+		categorie=new Categorie(cat);
 		intitule = titre;
 		avancement=0;
 	}
@@ -93,9 +73,10 @@ public abstract class Tache
 	{
 		intitule=s;
 	}
-	public void modification_categorie(int numCat)
+	public void modification_categorie(String s)
 	{
-		categorie=numCat;
+		categorie.set(s);
+		//TODO:
 	}
 	public void modification_echeance(Date fin)
 	{
@@ -107,13 +88,13 @@ public abstract class Tache
 		}
 	}
 
-	public abstract void setAvancement(int pourcentage);
+	public abstract void setAvancement(float pourcentage);
 
 	public String toString()
   {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		return intitule+", de catégorie "+categories.get(categorie)+
+		return intitule+", de catégorie "+categorie.get()+
 		", commence le "+formatter.format(dateDeb)+
 		" et fini le "+formatter.format(echeance)+
 		" d'avancement évalué à "+avancement+"%";

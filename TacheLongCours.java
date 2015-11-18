@@ -4,9 +4,9 @@ package todoList;
 public class TacheLongCours extends Tache
 {
 
-  public TacheLongCours(String fin, String titre, int num)
+  public TacheLongCours(String fin, String titre)
   {
-    super(fin,titre,num);
+    super(fin,titre);
   }
   public TacheLongCours(String fin, String titre, String categorie)
   {
@@ -16,13 +16,9 @@ public class TacheLongCours extends Tache
   {
     super(deb,fin,titre,categorie);
   }
-  public TacheLongCours(String deb, String fin, String titre, int num)
-  {
-    super(deb,fin,titre,num);
-  }
 
   //TODO: TEST pourcentage > 0 && avancement+pourcentage =< 1
-  public void setAvancement(int pourcentage)
+  public void setAvancement(float pourcentage)
   {
     avancement+=pourcentage;
     //TODO: if(avancement+pourcentage == 1) archiver la tâche

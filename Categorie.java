@@ -1,51 +1,28 @@
 package todoList;
 
-import java.util.Vector;
 
 public class Categorie
 {
-	protected Vector<String> v;
+	protected String nom;
 
 	public Categorie()
 	{
-		v = new Vector<String>();
-		v.add("Sans Categorie");
-		v.add("Personnel");
-		v.add("Travail");
-		//TODO: remplir avec fichier contenant liste catégories -> sinon créer+remplir
-	}
+    nom="Sans Categorie";
+  }
+  public Categorie(String s)
+  {
+    nom=s;
+		//if(!contient(s)){ajout(s);}
+  }
 
-	public String get(int i)
+	public String get()
 	{
-		int size=v.size();
-		if(i<size)
-			return v.get(i);
-		else
-			return v.get(0);
+		return nom;
 	}
-	public int taille()
+	
+	public void set(String s)
 	{
-		return v.size();
-	}
-	public boolean contient(String type)
-	{
-		return v.contains(type);
-	}
-	public void ajout(String type)
-	{
-		if(!v.contains(type))
-			v.add(type);
+		nom=s;
 		//TODO: ajouter au fichier de catégories
-	}
-	public void retrait(String type)
-	{
-		if(v.contains(type))
-			v.remove(type);
-		//TODO: vérifier+modifier les taches qui possédaient cette catégorie
-	}
-
-	public String toString()
-	{
-		return "Les différentes catégories sont "+v.toString();
 	}
 }
