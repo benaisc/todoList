@@ -20,5 +20,8 @@ public class Main
     collec.afficheCollection();
     collec.afficheCategories();
 
+
+    //TODO: collec.retrait(Categorie);
+
   }
 }

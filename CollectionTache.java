@@ -1,18 +1,17 @@
 package todoList;
 
-import java.util.Vector;
 import java.util.ArrayList;
 
 public class CollectionTache
 {
   private ArrayList<Tache> codex;
-  private Vector<Categorie> categories;
+  private ArrayList<Categorie> categories;
 
   public CollectionTache()
   {
     codex=new ArrayList<Tache>();
     //TODO: remplir avec fichier contenant liste taches
-    categories=new Vector<Categorie>();
+    categories=new ArrayList<Categorie>();
     //TODO: remplir avec fichier contenant liste catégories, sinon :
     categories.add(new Categorie());
     categories.add(new Categorie("Personnel"));
