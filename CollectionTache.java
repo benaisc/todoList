@@ -1,6 +1,9 @@
 package todoList;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.Date;
 
 public class CollectionTache
 {
@@ -51,9 +54,15 @@ public class CollectionTache
   }
   public void retrait(Categorie p)
   {
-    if(categories.contains(p))
-      //TODO: Passer en revue toute les tâches, mettre à Sans Categories les == p
+    //if(categories.contains(p)){
+      int size=codex.size();
+      for(int i=0; i<size; ++i){
+        if(codex.get(i).get_categorie().get()==p.get()){
+          codex.get(i).set_categorie("Sans Categorie");
+        }
+      }
       categories.remove(p);
+    //}
   }
   public Categorie get(int i)
   {
@@ -75,14 +84,11 @@ public class CollectionTache
       ++i;
     }
   }
-
-
   public void afficheCategories()
   {
-    int size=categories.size();
     String sum = "Les différentes catégories sont : [";
-    for(int i=0; i<size; ++i){
-	     sum+=categories.get(i).get()+", ";
+    for(Categorie a : categories) {
+    	    sum+=a.get()+", ";
     }
     sum+="]";
     System.out.println(sum);
@@ -97,4 +103,23 @@ public class CollectionTache
   4- Supprime le fichier taches.txt
   5- Ecrit un fichier taches.txt des taches de l'ArrayList
   */
+  public void tri_echeance(){
+    Collections.sort(codex, new DateComparator());
+  }
+
+}
+
+
+class DateComparator implements Comparator<Tache> {
+  public int compare(Tache t1, Tache t2) {
+	   Date t1d = t1.get_echeance();
+     Date t2d = t2.get_echeance();
+     if (t1d.after(t2d)) {
+       return 1;
+     } else if (t1d.before(t2d)) {
+       return -1;
+     } else {
+       return 0;
+     }
+   }
 }

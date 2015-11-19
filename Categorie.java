@@ -22,4 +22,11 @@ public class Categorie
 	{
 		nom=s;
 	}
+
+	public boolean equals(String s){
+		return nom==s;
+	}
+	public boolean equals(Categorie c){
+		return this==c;
+	}
 }

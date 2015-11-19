@@ -66,16 +66,29 @@ public abstract class Tache
 		avancement=0;
 	}
 
-	public void modification_titre(String s)
+	public String get_titre()
+	{
+		return intitule;
+	}
+	public Categorie get_categorie()
+	{
+		return categorie;
+	}
+	public Date get_echeance()
+	{
+		return echeance;
+	}
+
+	public void set_titre(String s)
 	{
 		intitule=s;
 	}
-	public void modification_categorie(String s)
+	public void set_categorie(String s)
 	{
 		categorie.set(s);
 		//TODO : Accès aux Categories ??????????????????????????????????
 	}
-	public void modification_echeance(Date fin)
+	public void set_echeance(Date fin)
 	{
 		if(dateDeb.before(fin)){
 			echeance.setTime(fin.getTime());
@@ -91,9 +104,8 @@ public abstract class Tache
   {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		String s = intitule+", de catégorie "+categorie.get()+
-		", commence le "+formatter.format(dateDeb)+
-		" et fini le "+formatter.format(echeance);
+		String s = this.getClass()+" : "+intitule+"; Catégorie "+categorie.get()+
+		"; du "+formatter.format(dateDeb)+" au "+formatter.format(echeance);
 		if(this instanceof TacheLongCours)
 			s+=" d'avancement évalué à "+avancement+"%";
 
