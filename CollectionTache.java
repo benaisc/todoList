@@ -21,6 +21,58 @@ public class CollectionTache
     categories.add(new Categorie("Travail"));
   }
 
+
+  public void start(){
+	String filePath = "~/todoList/taches.txt";
+ 	//TODO: Tester le path, si le fichier existe : 
+
+	Scanner scanner=new Scanner(new File(filePath));
+ 
+	// On boucle sur chaque champ detecté
+	while (scanner.hasNextLine()){
+   		String line = scanner.nextLine();
+   		System.out.println(line);
+		StringTokenizer st = new StringTokenizer(line);
+		
+		//TODO: Après avoir tokénizer ma line
+		Tache T;
+		switch(st.nextToken()){
+			case(0):
+				T=new TachePonctuelle();
+			default:
+		//TODO: Regarder le 1er token : créer tache Ponctuelle ou tache LongCours
+     		while(st.hasMoreTokens()){//TODO: On prend token par token pour remplir cette tache
+         		System.out.println(st.nextToken());
+     		}
+	}
+ 	scanner.close();
+  }
+
+  public void quit(){
+	File file = new File ("taches.txt");
+	if(file.exists()){
+	    System.out.println ("Le fichier existe déjà");
+		//TODO:Suppression du fichier + Creation d'un nouveau
+	}
+	else{
+	    try{
+		if(file.createNewFile()){
+			System.out.println ("Création du fichier réussie");
+			int size=codex.size();
+			for(int i=0; i<size; ++i){
+				file.write(codex[i].toWrite());
+			}
+		}
+		else{
+		    System.out.println ("Création du fichier echouée");
+		}
+	    }
+	    catch (IOException exception){
+		System.out.println ("Erreur " + exception.getMessage());
+	    }
+	}
+  }
+
   public int nbTaches()
   {
     return codex.size();
