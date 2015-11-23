@@ -7,7 +7,7 @@ public class Categorie
 
 	public Categorie()
 	{
-    nom="Sans Categorie";
+    nom="Sans_Categorie";
   }
   public Categorie(String s)
   {

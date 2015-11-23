@@ -17,10 +17,10 @@ public class TacheLongCours extends Tache
     super(deb,fin,titre,categorie);
   }
 
-  //TODO: TEST pourcentage > 0 && avancement+pourcentage =< 1
-  public void setAvancement(float pourcentage)
+  //TODO: TEST pourcentage > 0 && avancement+pourcentage =< 100
+  public void setAvancement(int pourcentage)
   {
     avancement+=pourcentage;
-    //TODO: if(avancement+pourcentage == 1) archiver la tâche
+    //TODO: if(avancement+pourcentage == 100) archiver la tâche
   }
 }

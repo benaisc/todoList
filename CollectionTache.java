@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class CollectionTache
 {
@@ -13,69 +19,83 @@ public class CollectionTache
   public CollectionTache()
   {
     codex=new ArrayList<Tache>();
-    //TODO: remplir avec fichier contenant liste taches
+    start_taches();
+
     categories=new ArrayList<Categorie>();
-    //TODO: remplir avec fichier contenant liste catégories, sinon :
-    categories.add(new Categorie());
-    categories.add(new Categorie("Personnel"));
-    categories.add(new Categorie("Travail"));
+    start_categories();
   }
 
+  public void start_taches(){
+    String filePath = "./todoList/taches";
+    File file = new File(filePath);
 
-  public void start(){
-	String filePath = "~/todoList/taches.txt";
- 	//TODO: Tester le path, si le fichier existe : 
+    if(file.exists()){
+      //System.out.println("Le Fichier de taches existe, on le lit ligne à ligne :");
+      try{
+        Scanner scanner=new Scanner(new File(filePath));
+        while(scanner.hasNextLine()){
+          String title = scanner.nextLine();
+          //System.out.println("Titre : "+title);
+          String line = scanner.nextLine();
+          //System.out.println("Description : "+line);
+          StringTokenizer st = new StringTokenizer(line);
 
-	Scanner scanner=new Scanner(new File(filePath));
- 
-	// On boucle sur chaque champ detecté
-	while (scanner.hasNextLine()){
-   		String line = scanner.nextLine();
-   		System.out.println(line);
-		StringTokenizer st = new StringTokenizer(line);
-		
-		//TODO: Après avoir tokénizer ma line
-		Tache T;
-		switch(st.nextToken()){
-			case(0):
-				T=new TachePonctuelle();
-			default:
-		//TODO: Regarder le 1er token : créer tache Ponctuelle ou tache LongCours
-     		while(st.hasMoreTokens()){//TODO: On prend token par token pour remplir cette tache
-         		System.out.println(st.nextToken());
-     		}
-	}
- 	scanner.close();
+          String dateD=st.nextToken();
+          String dateF=st.nextToken();
+          String cat=st.nextToken();
+
+          Tache T;
+          if(st.hasMoreTokens()){
+            T=new TacheLongCours(dateD,dateF,title,cat);
+            /*TODO:
+              String avance=st.nextToken();
+              T.setAvancement(String.toInteger(avance));
+            */
+          }
+          else{
+            T=new TachePonctuelle(dateF,title,cat);
+          }
+          codex.add(T);
+        }
+        scanner.close();
+      }catch(FileNotFoundException fnf){
+        fnf.printStackTrace();
+      }
+    }
   }
 
-  public void quit(){
-	File file = new File ("taches.txt");
-	if(file.exists()){
-	    System.out.println ("Le fichier existe déjà");
-		//TODO:Suppression du fichier + Creation d'un nouveau
-	}
-	else{
-	    try{
-		if(file.createNewFile()){
-			System.out.println ("Création du fichier réussie");
-			int size=codex.size();
-			for(int i=0; i<size; ++i){
-				file.write(codex[i].toWrite());
-			}
-		}
-		else{
-		    System.out.println ("Création du fichier echouée");
-		}
-	    }
-	    catch (IOException exception){
-		System.out.println ("Erreur " + exception.getMessage());
-	    }
-	}
+  public void start_categories(){
+    String filePath = "./todoList/categories";
+    File file = new File(filePath);
+    if(file.exists()){
+      //System.out.println("Le Fichier de categories existe, on le lit ligne à ligne :");
+      try{
+        Scanner scanner=new Scanner(new File(filePath));
+        while(scanner.hasNextLine()){
+          String line = scanner.nextLine();
+          categories.add(new Categorie(line));
+          //System.out.println(line);
+        }
+        scanner.close();
+      }catch(FileNotFoundException fnf){
+        fnf.printStackTrace();
+      }
+    }
+    else{//Le fichier sera créer au quit(), on fait son initialisation
+      categories.add(new Categorie());
+      categories.add(new Categorie("Personnel"));
+      categories.add(new Categorie("Travail"));
+    }
   }
 
   public int nbTaches()
   {
     return codex.size();
+  }
+  public void retrait(Tache t)
+  {
+    if(codex.contains(t))
+			codex.remove(t);
   }
   public boolean contient(Tache t)
   {
@@ -83,15 +103,9 @@ public class CollectionTache
   }
   public void ajout(Tache t)
   {
-    codex.add(t);
+    if(!codex.contains(t))
+      codex.add(t);
   }
-  public void retrait(Tache t)
-  {
-    if(codex.contains(t))
-      //TODO: Archiver
-			codex.remove(t);
-  }
-
   public int nbCategorie()
   {
     return categories.size();
@@ -100,31 +114,112 @@ public class CollectionTache
   {
     return categories.contains(p);
   }
+  public Categorie get(int i)
+  {
+     int size=categories.size();
+      if(i<size)
+        return categories.get(i);
+      else
+        return categories.get(0);
+  }
   public void ajout(Categorie p)
   {
-    categories.add(p);
+    if(!categories.contains(p))
+      categories.add(p);
   }
   public void retrait(Categorie p)
   {
-    //if(categories.contains(p)){
+    if(categories.contains(p)){
       int size=codex.size();
       for(int i=0; i<size; ++i){
         if(codex.get(i).get_categorie().get()==p.get()){
-          codex.get(i).set_categorie("Sans Categorie");
+          codex.get(i).set_categorie("Sans_Categorie");
         }
       }
       categories.remove(p);
-    //}
-  }
-  public Categorie get(int i)
-  {
-	   int size=categories.size();
-	    if(i<size)
-        return categories.get(i);
-  	  else
-  	    return categories.get(0);
+    }
   }
 
+public void ecrire_Tache(){
+  File file = new File ("./todoList/taches");
+  if(file.exists()){
+    System.out.println ("Le fichier de taches existe déjà; On le supprime.");
+    file.delete();
+  }
+  try{
+    if(file.createNewFile()){
+      FileWriter writer = new FileWriter(file);
+      System.out.println ("Création du fichier taches réussie");
+      int size=codex.size();
+      for(int i=0; i<size; ++i){
+        String s=codex.get(i).toWrite();
+        writer.write(s);
+        writer.flush();
+      }
+      writer.close();
+    }
+    else{
+      System.out.println ("Création du fichier echouée");
+    }
+  }
+  catch (IOException e){
+    System.out.println ("Erreur " + e.getMessage());
+  }
+}
+
+public void ecrire_Categories(){
+  File file = new File ("./todoList/categories");
+  if(file.exists()){
+    System.out.println ("Le fichier de categories existe déjà; On le supprime.");
+    file.delete();
+  }
+  try{
+    if(file.createNewFile()){
+      System.out.println ("Création du fichier categories réussie");
+      FileWriter writer = new FileWriter(file);
+      int size=categories.size();
+      for(int i=0; i<size; ++i){
+        String s=categories.get(i).get()+"\n";
+        writer.write(s);
+        writer.flush();
+      }
+      writer.close();
+    }
+    else{
+      System.out.println ("Création du fichier echouée");
+    }
+  }
+  catch (IOException e){
+    System.out.println ("Erreur " + e.getMessage());
+  }
+}
+/*
+public void archiver_Tache(Tache t)
+{
+  File file = new File ("taches_archivees.txt");
+  if(file.exists()){
+    System.out.println ("Le fichier existe déjà");
+    //TODO: APPEND les taches au fichier
+  }
+  else{
+    try{
+      if(file.createNewFile()){
+        System.out.println ("Création du fichier réussie");
+        int size=codex.size();
+        for(int i=0; i<size; ++i){
+          file.write(codex[i].toWrite());
+        }
+      }
+      else{
+        System.out.println ("Création du fichier echouée");
+      }
+    }
+    catch (IOException exception){
+      System.out.println ("Erreur " + exception.getMessage());
+    }
+  }
+}
+*/
 
   public void afficheCollection()
   {
@@ -146,19 +241,9 @@ public class CollectionTache
     System.out.println(sum);
   }
 
-  /*
-  TODO: une méthode qui :
-  1- Cherche à ouvrir un fichier taches.txt
-  2- Si existe, il rempli l'ArrayList de tâches créées à la volée en lisant le fichier
-    (Compter le nombre de tokens pour utiliser les bon constructeurs)
-  3- Utilisation du logiciel
-  4- Supprime le fichier taches.txt
-  5- Ecrit un fichier taches.txt des taches de l'ArrayList
-  */
   public void tri_echeance(){
     Collections.sort(codex, new DateComparator());
   }
-
 }
 
 

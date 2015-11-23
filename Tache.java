@@ -10,7 +10,7 @@ public abstract class Tache
 	protected Date dateDeb;
 	protected Date echeance;
 	protected String intitule;
-	protected float avancement;
+	protected int avancement;
 	protected Categorie categorie;
 
 
@@ -98,7 +98,7 @@ public abstract class Tache
 		}
 	}
 
-	public abstract void setAvancement(float pourcentage);
+	public abstract void setAvancement(int pourcentage);
 
 	public String toString()
   {
@@ -113,15 +113,15 @@ public abstract class Tache
 	}
 
 	public String toWrite()
-  	{
+  {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		String s;
 		if(this instanceof TacheLongCours)
-			s+="1 "+intitule+" "+categorie.get()+" "+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+avancement+"\n";
-		else 
-			s+="0 "intitule+" "+categorie.get()+" "+formatter.format(dateDeb)+" "+formatter.format(echeance)+"\n";
-		
+			s=intitule+"\n"+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+categorie.get()+" "+avancement+"\n";
+		else
+			s=intitule+"\n"+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+categorie.get()+"\n";
+
 		return s;
 	}
 }

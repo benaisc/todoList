@@ -14,7 +14,7 @@ public class TachePonctuelle extends Tache
   }
 
 
-  public void setAvancement(float pourcentage)
+  public void setAvancement(int pourcentage)
   {
     if(pourcentage > 0)
       avancement=1;
