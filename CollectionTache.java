@@ -30,14 +30,11 @@ public class CollectionTache
     File file = new File(filePath);
 
     if(file.exists()){
-      //System.out.println("Le Fichier de taches existe, on le lit ligne à ligne :");
       try{
         Scanner scanner=new Scanner(new File(filePath));
         while(scanner.hasNextLine()){
           String title = scanner.nextLine();
-          //System.out.println("Titre : "+title);
           String line = scanner.nextLine();
-          //System.out.println("Description : "+line);
           StringTokenizer st = new StringTokenizer(line);
 
           String dateD=st.nextToken();
@@ -47,13 +44,11 @@ public class CollectionTache
           Tache T;
           if(st.hasMoreTokens()){
             T=new TacheLongCours(dateD,dateF,title,cat);
-            /*TODO:
-              String avance=st.nextToken();
-              T.setAvancement(String.toInteger(avance));
-            */
+            String avance=st.nextToken();
+            T.setAvancement(Integer.parseInt(avance));
           }
           else{
-            T=new TachePonctuelle(dateF,title,cat);
+            T=new TachePonctuelle(dateD,dateF,title,cat);
           }
           codex.add(T);
         }
@@ -68,13 +63,11 @@ public class CollectionTache
     String filePath = "./todoList/categories";
     File file = new File(filePath);
     if(file.exists()){
-      //System.out.println("Le Fichier de categories existe, on le lit ligne à ligne :");
       try{
         Scanner scanner=new Scanner(new File(filePath));
         while(scanner.hasNextLine()){
           String line = scanner.nextLine();
           categories.add(new Categorie(line));
-          //System.out.println(line);
         }
         scanner.close();
       }catch(FileNotFoundException fnf){
@@ -88,10 +81,6 @@ public class CollectionTache
     }
   }
 
-  public int nbTaches()
-  {
-    return codex.size();
-  }
   public void retrait(Tache t)
   {
     if(codex.contains(t))
@@ -106,10 +95,7 @@ public class CollectionTache
     if(!codex.contains(t))
       codex.add(t);
   }
-  public int nbCategorie()
-  {
-    return categories.size();
-  }
+
   public boolean contient(Categorie p)
   {
     return categories.contains(p);
@@ -140,59 +126,59 @@ public class CollectionTache
     }
   }
 
-public void ecrire_Tache(){
-  File file = new File ("./todoList/taches");
-  if(file.exists()){
-    System.out.println ("Le fichier de taches existe déjà; On le supprime.");
-    file.delete();
-  }
-  try{
-    if(file.createNewFile()){
-      FileWriter writer = new FileWriter(file);
-      System.out.println ("Création du fichier taches réussie");
-      int size=codex.size();
-      for(int i=0; i<size; ++i){
-        String s=codex.get(i).toWrite();
-        writer.write(s);
-        writer.flush();
+  public void ecrire_Tache(){
+    File file = new File ("./todoList/taches");
+    if(file.exists()){
+      System.out.println ("Le fichier de taches existe déjà; On le supprime.");
+      file.delete();
+    }
+    try{
+      if(file.createNewFile()){
+        FileWriter writer = new FileWriter(file);
+        System.out.println ("Création du fichier taches réussie");
+        int size=codex.size();
+        for(int i=0; i<size; ++i){
+          String s=codex.get(i).toWrite();
+          writer.write(s);
+          writer.flush();
+        }
+        writer.close();
       }
-      writer.close();
+      else{
+        System.out.println ("Création du fichier echouée");
+      }
     }
-    else{
-      System.out.println ("Création du fichier echouée");
+    catch (IOException e){
+      System.out.println ("Erreur " + e.getMessage());
     }
   }
-  catch (IOException e){
-    System.out.println ("Erreur " + e.getMessage());
-  }
-}
 
-public void ecrire_Categories(){
-  File file = new File ("./todoList/categories");
-  if(file.exists()){
-    System.out.println ("Le fichier de categories existe déjà; On le supprime.");
-    file.delete();
-  }
-  try{
-    if(file.createNewFile()){
-      System.out.println ("Création du fichier categories réussie");
-      FileWriter writer = new FileWriter(file);
-      int size=categories.size();
-      for(int i=0; i<size; ++i){
-        String s=categories.get(i).get()+"\n";
-        writer.write(s);
-        writer.flush();
+  public void ecrire_Categories(){
+    File file = new File ("./todoList/categories");
+    if(file.exists()){
+      System.out.println ("Le fichier de categories existe déjà; On le supprime.");
+      file.delete();
+    }
+    try{
+      if(file.createNewFile()){
+        System.out.println ("Création du fichier categories réussie");
+        FileWriter writer = new FileWriter(file);
+        int size=categories.size();
+        for(int i=0; i<size; ++i){
+          String s=categories.get(i).get()+"\n";
+          writer.write(s);
+          writer.flush();
+        }
+        writer.close();
       }
-      writer.close();
+      else{
+        System.out.println ("Création du fichier echouée");
+      }
     }
-    else{
-      System.out.println ("Création du fichier echouée");
+    catch (IOException e){
+      System.out.println ("Erreur " + e.getMessage());
     }
   }
-  catch (IOException e){
-    System.out.println ("Erreur " + e.getMessage());
-  }
-}
 /*
 public void archiver_Tache(Tache t)
 {

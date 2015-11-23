@@ -12,6 +12,10 @@ public class TachePonctuelle extends Tache
   {
     super(fin,titre,categorie);
   }
+  public TachePonctuelle(String deb, String fin, String titre, String categorie)
+  {
+    super(deb,fin,titre,categorie);
+  }
 
 
   public void setAvancement(int pourcentage)

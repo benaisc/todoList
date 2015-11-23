@@ -21,6 +21,6 @@ public class TacheLongCours extends Tache
   public void setAvancement(int pourcentage)
   {
     avancement+=pourcentage;
-    //TODO: if(avancement+pourcentage == 100) archiver la tâche
+    //TODO: if(avancement+pourcentage >= 100) archiver la tâche
   }
 }
