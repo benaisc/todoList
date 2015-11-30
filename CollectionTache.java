@@ -113,6 +113,19 @@ public class CollectionTache
     if(!categories.contains(p))
       categories.add(p);
   }
+  public void modifier(Categorie p, String s)
+  {
+    if(categories.contains(p)){
+      int size=codex.size();
+      for(int i=0; i<size; ++i){
+        if(codex.get(i).get_categorie().get()==p.get()){
+          codex.get(i).set_categorie(s);
+        }
+      }
+      categories.remove(p);
+      categories.ajout(new Categorie(s));
+    }
+  }
   public void retrait(Categorie p)
   {
     if(categories.contains(p)){
