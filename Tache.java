@@ -100,13 +100,13 @@ public abstract class Tache
 	public abstract void setAvancement(int pourcentage);
 
 	public String toString()
-  {
+  	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		String s = this.getClass()+" : "+intitule+"; Catégorie "+categorie.get()+
-		"; du "+formatter.format(dateDeb)+" au "+formatter.format(echeance);
+		String s = intitule+" de Catégorie "+categorie.get()+
+		"; du "+formatter.format(dateDeb)+" au "+formatter.format(echeance)+";";
 		if(this instanceof TacheLongCours)
-			s+=" d'avancement évalué à "+avancement+"%";
+			s+=" d'avancement : "+avancement+"%";
 
 		return s;
 	}

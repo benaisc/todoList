@@ -81,65 +81,7 @@ public class CollectionTache
     }
   }
 
-  public void retrait(Tache t)
-  {
-    if(codex.contains(t))
-			codex.remove(t);
-  }
-  public boolean contient(Tache t)
-  {
-    return codex.contains(t);
-  }
-  public void ajout(Tache t)
-  {
-    if(!codex.contains(t))
-      codex.add(t);
-  }
-
-  public boolean contient(Categorie p)
-  {
-    return categories.contains(p);
-  }
-  public Categorie get(int i)
-  {
-     int size=categories.size();
-      if(i<size)
-        return categories.get(i);
-      else
-        return categories.get(0);
-  }
-  public void ajout(Categorie p)
-  {
-    if(!categories.contains(p))
-      categories.add(p);
-  }
-  public void modifier(Categorie p, String s)
-  {
-    if(categories.contains(p)){
-      int size=codex.size();
-      for(int i=0; i<size; ++i){
-        if(codex.get(i).get_categorie().get()==p.get()){
-          codex.get(i).set_categorie(s);
-        }
-      }
-      categories.remove(p);
-      categories.ajout(new Categorie(s));
-    }
-  }
-  public void retrait(Categorie p)
-  {
-    if(categories.contains(p)){
-      int size=codex.size();
-      for(int i=0; i<size; ++i){
-        if(codex.get(i).get_categorie().get()==p.get()){
-          codex.get(i).set_categorie("Sans_Categorie");
-        }
-      }
-      categories.remove(p);
-    }
-  }
-
-  public void ecrire_Tache(){
+  public void close_Tache(){
     File file = new File ("./todoList/taches");
     if(file.exists()){
       System.out.println ("Le fichier de taches existe déjà; On le supprime.");
@@ -166,7 +108,7 @@ public class CollectionTache
     }
   }
 
-  public void ecrire_Categories(){
+  public void close_Categories(){
     File file = new File ("./todoList/categories");
     if(file.exists()){
       System.out.println ("Le fichier de categories existe déjà; On le supprime.");
@@ -195,10 +137,18 @@ public class CollectionTache
 /*
 public void archiver_Tache(Tache t)
 {
-  File file = new File ("taches_archivees.txt");
+  File file = new File ("taches_archivees");
   if(file.exists()){
-    System.out.println ("Le fichier existe déjà");
     //TODO: APPEND les taches au fichier
+	try{
+		FileWriter writer = new FileWriter(file);
+		String s=t.toWrite()+"\n";
+		writer.append(s);
+		writer.flush();
+		writer.close();
+	} catch (IOException e){
+		System.out.println ("Erreur " + e.getMessage());
+	}
   }
   else{
     try{
@@ -219,6 +169,76 @@ public void archiver_Tache(Tache t)
   }
 }
 */
+  public int nbTaches(){
+	return codex.size();
+  }
+  public String getTache(int i){
+	return codex.get(i).toString();
+  }
+  public void ajout(Tache t)
+  {
+    if(!codex.contains(t))
+      codex.add(t);
+  }
+/*
+  public void retrait(Tache t)
+  {
+    if(codex.contains(t))
+			codex.remove(t);
+  }
+  public boolean contient(Tache t)
+  {
+    return codex.contains(t);
+  }
+  
+  public boolean contient(Categorie p)
+  {
+    return categories.contains(p);
+  }
+  public Categorie get(int i)
+  {
+     int size=categories.size();
+      if(i<size)
+        return categories.get(i);
+      else
+        return categories.get(0);
+  }
+
+  public void ajout(Categorie p)
+  {
+    if(!categories.contains(p))
+      categories.add(p);
+  }
+  public void modifier(Categorie p, String s)
+  {
+    if(categories.contains(p)){
+
+      int size=codex.size();
+
+      for(int i=0; i<size; ++i){
+
+        if(codex.get(i).get_categorie().get()==p.get()){
+
+          codex.get(i).set_categorie(s);
+
+        }
+      }
+      categories.remove(p);
+      categories.add(new Categorie(s));
+    }
+  }
+  public void retrait(Categorie p)
+  {
+    if(categories.contains(p)){
+      int size=codex.size();
+      for(int i=0; i<size; ++i){
+        if(codex.get(i).get_categorie().get()==p.get()){
+          codex.get(i).set_categorie("Sans_Categorie");
+        }
+      }
+      categories.remove(p);
+    }
+  }
 
   public void afficheCollection()
   {
@@ -239,7 +259,7 @@ public void archiver_Tache(Tache t)
     sum+="]";
     System.out.println(sum);
   }
-
+*/
   public void tri_echeance(){
     Collections.sort(codex, new DateComparator());
   }
