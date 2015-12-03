@@ -14,7 +14,7 @@ public abstract class Tache
 	protected Categorie categorie;
 
 
-	//Rmq: On ne peut pas créer de tache avec date de début sans catégorie.
+	//Ne garder que le constructeur full ?
 
 	public Tache(String fin, String titre)
 	{
@@ -100,7 +100,7 @@ public abstract class Tache
 	public abstract void setAvancement(int pourcentage);
 
 	public String toString()
-  	{
+	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		String s = intitule+" de Catégorie "+categorie.get()+

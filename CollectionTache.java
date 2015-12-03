@@ -16,8 +16,7 @@ public class CollectionTache
   private ArrayList<Tache> codex;
   private ArrayList<Categorie> categories;
 
-  public CollectionTache()
-  {
+  public CollectionTache(){
     codex=new ArrayList<Tache>();
     start_taches();
 
@@ -170,27 +169,31 @@ public void archiver_Tache(Tache t)
 }
 */
   public int nbTaches(){
-	return codex.size();
+	   return codex.size();
   }
   public String getTache(int i){
-	return codex.get(i).toString();
+	   return codex.get(i).toString();
   }
-  public void ajout(Tache t)
-  {
+  public void ajout(Tache t){
     if(!codex.contains(t))
       codex.add(t);
   }
-/*
-  public void retrait(Tache t)
-  {
+  public void ajout(ArrayList<Tache> t){
+    for(int i=0;i<t.size();++i){
+        System.out.println("On ajoute la tache : \n"+t.get(i).toString());
+        codex.add(t.get(i));
+    }
+  }
+  public void retrait(Tache t){
     if(codex.contains(t))
 			codex.remove(t);
   }
+/*
   public boolean contient(Tache t)
   {
     return codex.contains(t);
   }
-  
+
   public boolean contient(Categorie p)
   {
     return categories.contains(p);
@@ -209,18 +212,14 @@ public void archiver_Tache(Tache t)
     if(!categories.contains(p))
       categories.add(p);
   }
+
   public void modifier(Categorie p, String s)
   {
     if(categories.contains(p)){
-
       int size=codex.size();
-
       for(int i=0; i<size; ++i){
-
         if(codex.get(i).get_categorie().get()==p.get()){
-
           codex.get(i).set_categorie(s);
-
         }
       }
       categories.remove(p);
@@ -259,6 +258,7 @@ public void archiver_Tache(Tache t)
     sum+="]";
     System.out.println(sum);
   }
+
 */
   public void tri_echeance(){
     Collections.sort(codex, new DateComparator());
