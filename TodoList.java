@@ -62,6 +62,7 @@ public class TodoList extends JFrame implements WindowListener
 						collec.ajout(a.fetch());
 						pDroite.removeAll();
 						init_taches();
+						pack();
 						a.dispose();
 					}
 				});
