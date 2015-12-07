@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 /*Add_Task
-	-Ouvrir une fenetre contenant X JTextFields et 1 JButton 'Send'
+	-Ouvre une fenetre contenant des JTextFields et 1 JButton 'Send'
 	-Return une liste de taches des JTextFields sendés successifs*/
 public class CreerTache extends JFrame
 {
@@ -53,8 +53,8 @@ public class CreerTache extends JFrame
 				t.add(new TachePonctuelle(t3.getText(),t4.getText(),t1.getText(),t2.getText()));
 				t1.setText("");
 				t2.setText("");
-				t3 = new JTextField(formatter.format(dateJour),20);
-				t4 = new JTextField("dd/mm/yyyy",20);
+				t3.setText(formatter.format(dateJour));
+				t4.setText("dd/mm/yyyy");
 			}
 		});
 		p.add(b1);
