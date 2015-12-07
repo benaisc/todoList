@@ -24,7 +24,6 @@ I- Description des classes
 		-CreerTache : 
 			Une fenêtre contenant les différents champs nécessaire à l'instanciation d'une tâche
 			Un bouton permettant la création d'une nouvelle tache pour notre CollectionTache
-			J'ai fais le choix de remplir une ArrayList de tâches au fur et à mesure de l'ajout successif de tâches, et de ne les ajouter à CollectionTache qu'à la fermeture de la fenêtre CreerTache.
 
 		-ModifTache : 
 			Une fenêtre contenant une liste cliquable des titres de nos taches initialisant les différents champs nécessaire à la modification de la tâche
@@ -35,15 +34,27 @@ I- Description des classes
 
 II- Choix effectués
 	Partie Metier : 
+		Categorie : 
+			
 
+		-Tache : 
+			
+
+		-TachePonctuelle / TacheLongCours :
+			
+
+		-CollectionTache :
 
 	Partie Graphique : 
+		-TodoList :
+			La fenêtre d'affichage TodoList est mise à jour à la fermeture d'une frame CreerTache ou ModifTache
+
 		-CreerTache : 
 			J'ai fais le choix de remplir une ArrayList de tâches au fur et à mesure de l'ajout successif de tâches, et de ne les ajouter à CollectionTache qu'à la fermeture de la fenêtre CreerTache.
+			Mettre une date de fin à une tache initialise une TacheLongCours, sinon TachePonctuelle
 
 		-ModifTache : 
 			J'ai fais le choix d'afficher une liste des titres des taches de CollectionTache dans le but de pouvoir identifier la Tache en question et l'afficher dans différents champs modifiables.
 
 
-III- Conclusion
 
