@@ -70,9 +70,13 @@ public abstract class Tache
 	{
 		return intitule;
 	}
-	public Categorie get_categorie()
+	public String get_categorie()
 	{
-		return categorie;
+		return categorie.get();
+	}
+	public Date get_debut()
+	{
+		return dateDeb;
 	}
 	public Date get_echeance()
 	{

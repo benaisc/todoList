@@ -49,6 +49,7 @@ public class TodoList extends JFrame implements WindowListener
 		}
 		table.setEnabled(false);//empeche l'interation avec les cellules
 		pDroite.add(scrollpane);
+		pack();
 	}
 
 	public void init_boutons(){
@@ -70,7 +71,8 @@ public class TodoList extends JFrame implements WindowListener
 		b2 = new JButton("MaJ Task");
 		b2.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
-				System.out.println("Souris cliquée en MaJ Task");
+				ModifTache a=new ModifTache(collec);
+				a.setVisible(true);
 			}
 		});
 		b3 = new JButton("Archive Task");
@@ -90,6 +92,7 @@ public class TodoList extends JFrame implements WindowListener
 		pGauche.add(b2);
 		pGauche.add(b3);
 		pGauche.add(b4);
+		pack();
 	}
 
 	public void windowClosing(WindowEvent e) {

@@ -7,12 +7,12 @@ public class Categorie
 
 	public Categorie()
 	{
-    nom="Sans_Categorie";
-  }
-  public Categorie(String s)
-  {
-    nom=s;
-  }
+    		nom="Sans_Categorie";
+  	}
+	public Categorie(String s)
+	{
+		nom=s;
+	}
 
 	public String get()
 	{
@@ -23,8 +23,8 @@ public class Categorie
 		nom=s;
 	}
 
-	public boolean equals(String s){
-		return nom==s;
+	public boolean egal(String s){
+		return nom.equals(s);
 	}
 	public boolean equals(Categorie c){
 		return this==c;

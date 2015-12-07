@@ -25,7 +25,6 @@ public class CreerTache extends JFrame
 		JPanel p = new JPanel();
 		add(p);
 		p.setPreferredSize(new Dimension(350,200));
-		//p.setBackground(Color.black);
 		p.setLayout(new FlowLayout());
 
 		l1 = new JLabel("Titre : ");
@@ -50,7 +49,12 @@ public class CreerTache extends JFrame
 		b1 = new JButton("Add");
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
-				t.add(new TachePonctuelle(t3.getText(),t4.getText(),t1.getText(),t2.getText()));
+				if(t4.getText().equals("dd/mm/yyyy")){
+					t.add(new TachePonctuelle(t3.getText(),t1.getText(),t2.getText()));
+				}
+				else{
+					t.add(new TacheLongCours(t3.getText(),t4.getText(),t1.getText(),t2.getText()));
+				}
 				t1.setText("");
 				t2.setText("");
 				t3 = new JTextField(formatter.format(dateJour),20);

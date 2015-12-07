@@ -171,8 +171,20 @@ public void archiver_Tache(Tache t)
   public int nbTaches(){
 	   return codex.size();
   }
-  public String getTache(int i){
-	   return codex.get(i).toString();
+  public Tache getTache(int i){
+	   return codex.get(i);
+  }
+  public String getTitre(int i){
+	   return codex.get(i).get_titre();
+  }
+  public String getCategorie(int i){
+	   return codex.get(i).get_categorie();
+  }
+  public Date getDebut(int i){
+	   return codex.get(i).get_debut();
+  }
+  public Date getEcheance(int i){
+	   return codex.get(i).get_echeance();
   }
   public void ajout(Tache t){
     if(!codex.contains(t))
