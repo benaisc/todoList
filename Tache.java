@@ -11,7 +11,7 @@ public abstract class Tache
 	protected Date echeance;
 	protected String intitule;
 	protected int avancement;
-	protected Categorie categorie;
+	protected String categorie;
 
 
 	public Tache(String deb, String titre, String cat)
@@ -25,7 +25,7 @@ public abstract class Tache
     }catch(ParseException e){
     	e.printStackTrace();
   	}
-		categorie=new Categorie(cat);
+		categorie=cat;
 		intitule = titre;
 		avancement = 0;
 	}
@@ -43,7 +43,7 @@ public abstract class Tache
 		}catch(ParseException e){
 			e.printStackTrace();
 		}
-		categorie=new Categorie(cat);
+		categorie=cat;
 		intitule = titre;
 		avancement=0;
 	}
@@ -54,7 +54,7 @@ public abstract class Tache
 	}
 	public String get_categorie()
 	{
-		return categorie.get();
+		return categorie;
 	}
 	public Date get_debut()
 	{
@@ -64,14 +64,13 @@ public abstract class Tache
 	{
 		return echeance;
 	}
-
 	public void set_titre(String s)
 	{
 		intitule=s;
 	}
 	public void set_categorie(String s)
 	{
-		categorie.set(s);
+		categorie=s;
 	}
 	public void set_echeance(Date fin)
 	{
@@ -89,7 +88,7 @@ public abstract class Tache
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		String s = intitule+" de Catégorie "+categorie.get()+
+		String s = intitule+" de Catégorie "+categorie+
 		"; Debut "+formatter.format(dateDeb)+";";
 		if(this instanceof TacheLongCours)
 			s+=" Fin "+formatter.format(echeance)+"; D'avancement : "+avancement+"%";
@@ -103,9 +102,9 @@ public abstract class Tache
 
 		String s;
 		if(this instanceof TacheLongCours)
-			s=intitule+"\n"+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+categorie.get()+" "+avancement+"\n";
+			s=intitule+"\n"+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+categorie+" "+avancement+"\n";
 		else
-			s=intitule+"\n"+formatter.format(dateDeb)+" "+categorie.get()+"\n";
+			s=intitule+"\n"+formatter.format(dateDeb)+" "+categorie+"\n";
 
 		return s;
 	}

@@ -14,8 +14,9 @@ A la fermeture de la fenêtre on écrase la tache d'origine pour une nouvelle ta
 public class ModifTache extends JFrame
 {
 	protected JPanel p;
-	protected JLabel l1,l2,l3,l4;
+	protected JLabel l1,l2,l3,l4,lsupp;
 	protected JTextField t1,t2,t3,t4;
+	protected JCheckBox chk;
 	protected boolean type_tache;
 
 	public ModifTache(CollectionTache c, int i)
@@ -24,7 +25,6 @@ public class ModifTache extends JFrame
 		p = new JPanel();
 		add(p);
 		p.setPreferredSize(new Dimension(350,200));
-		//p.setBackground(Color.red);
 		p.setLayout(new FlowLayout());
 
 		l1 = new JLabel("Titre : ");
@@ -35,6 +35,12 @@ public class ModifTache extends JFrame
 		t2 = new JTextField(c.getCategorie(i),20);
 		p.add(l2);
 		p.add(t2);
+
+		lsupp = new JLabel("Modifier la catégorie des autres taches ?");
+		chk = new JCheckBox();
+		p.add(lsupp);
+		p.add(chk);
+
 		l3 = new JLabel("Date début : ");
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		t3 = new JTextField(formatter.format(c.getDebut(i)),20);
@@ -52,6 +58,7 @@ public class ModifTache extends JFrame
 
 		pack();
 	}
+
 	public ModifTache(){
 		setTitle("jModifTache");
 		p = new JPanel();
@@ -60,7 +67,7 @@ public class ModifTache extends JFrame
 		p.setBackground(Color.red);
 		p.setLayout(new FlowLayout());
 
-		l1 = new JLabel("Selectionnez une tache");
+		l1 = new JLabel("Selectionnez une tache à modifier");
 		p.add(l1);
 
 		pack();
@@ -73,5 +80,12 @@ public class ModifTache extends JFrame
 		else{
 			return new TachePonctuelle(t3.getText(),t1.getText(),t2.getText());
 		}
+	}
+	public String fetch_cat(){
+		return t2.getText();
+	}
+
+	public boolean checkbox(){
+		return chk.isSelected();
 	}
 }

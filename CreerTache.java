@@ -57,6 +57,7 @@ public class CreerTache extends JFrame
 				String tit,c,dd,df;
 				tit=t1.getText();
 				c=t2.getText();
+				if(c.equals("") || c.equals("null")){c="Sans_Categorie";}
 				dd=t3.getText();
 				df=t4.getText();
 				if(df.equals("dd/mm/yyyy") || df.equals("")){

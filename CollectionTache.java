@@ -14,13 +14,13 @@ import java.io.IOException;
 public class CollectionTache
 {
   private ArrayList<Tache> codex;
-  private ArrayList<Categorie> categories;
+  private ArrayList<String> categories;
 
   public CollectionTache(){
     codex=new ArrayList<Tache>();
     start_taches();
 
-    categories=new ArrayList<Categorie>();
+    categories=new ArrayList<String>();
     start_categories();
   }
 
@@ -60,24 +60,8 @@ public class CollectionTache
   }
 
   public void start_categories(){
-    String filePath = "./todoList/categories";
-    File file = new File(filePath);
-    if(file.exists()){
-      try{
-        Scanner scanner=new Scanner(new File(filePath));
-        while(scanner.hasNextLine()){
-          String line = scanner.nextLine();
-          categories.add(new Categorie(line));
-        }
-        scanner.close();
-      }catch(FileNotFoundException fnf){
-        fnf.printStackTrace();
-      }
-    }
-    else{//Le fichier sera créer au quit(), on fait son initialisation
-      categories.add(new Categorie());
-      categories.add(new Categorie("Personnel"));
-      categories.add(new Categorie("Travail"));
+    for(int i=0;i<codex.size();++i){
+        ajouter(getCategorie(i));
     }
   }
 
@@ -108,67 +92,45 @@ public class CollectionTache
     }
   }
 
-  public void close_Categories(){
-    File file = new File ("./todoList/categories");
+  public void archiver_Tache(int i)
+  {
+    File file = new File ("./todoList/taches_archivees");
     if(file.exists()){
-      System.out.println ("Le fichier de categories existe déjà; On le supprime.");
-      file.delete();
+      System.out.println ("Concaténation de la tâche aux tâches archivées");
+    	try{
+    		FileWriter writer = new FileWriter(file,true);
+    		String s=codex.get(i).toWrite();
+    		writer.append(s);
+    		writer.flush();
+    		writer.close();
+    	} catch (IOException e){
+    		System.out.println ("Erreur " + e.getMessage());
+    	}
     }
-    try{
-      if(file.createNewFile()){
-        System.out.println ("Création du fichier categories réussie");
-        FileWriter writer = new FileWriter(file);
-        int size=categories.size();
-        for(int i=0; i<size; ++i){
-          String s=categories.get(i).get()+"\n";
-          writer.write(s);
-          writer.flush();
+    else{
+      try{
+        if(file.createNewFile()){
+          System.out.println ("Création du fichier taches_archivees réussie");
+          try{
+        		FileWriter writer = new FileWriter(file);
+        		String s=codex.get(i).toWrite();
+        		writer.write(s);
+        		writer.flush();
+        		writer.close();
+        	} catch (IOException e){
+        		System.out.println ("Erreur " + e.getMessage());
+        	}
         }
-        writer.close();
-      }
-      else{
-        System.out.println ("Création du fichier echouée");
-      }
-    }
-    catch (IOException e){
-      System.out.println ("Erreur " + e.getMessage());
-    }
-  }
-/*
-public void archiver_Tache(Tache t)
-{
-  File file = new File ("taches_archivees");
-  if(file.exists()){
-    //TODO: APPEND les taches au fichier
-	try{
-		FileWriter writer = new FileWriter(file);
-		String s=t.toWrite()+"\n";
-		writer.append(s);
-		writer.flush();
-		writer.close();
-	} catch (IOException e){
-		System.out.println ("Erreur " + e.getMessage());
-	}
-  }
-  else{
-    try{
-      if(file.createNewFile()){
-        System.out.println ("Création du fichier réussie");
-        int size=codex.size();
-        for(int i=0; i<size; ++i){
-          file.write(codex[i].toWrite());
+        else{
+          System.out.println ("Création du fichier taches_archivees echouée");
         }
       }
-      else{
-        System.out.println ("Création du fichier echouée");
+      catch (IOException e){
+        System.out.println ("Erreur " + e.getMessage());
       }
     }
-    catch (IOException exception){
-      System.out.println ("Erreur " + exception.getMessage());
-    }
   }
-}
-*/
+
   public int nbTaches(){
 	   return codex.size();
   }
@@ -188,81 +150,60 @@ public void archiver_Tache(Tache t)
 	   return codex.get(i).get_echeance();
   }
   public void ajout(Tache t){
-    if(!codex.contains(t))
-      System.out.println("On ajoute la tache : \n"+t.toString());
+    if(!codex.contains(t)){
       codex.add(t);
+      ajouter(t.get_categorie());
+    }
   }
+
   public void ajout(ArrayList<Tache> t){
     for(int i=0;i<t.size();++i){
-        System.out.println("On ajoute la tache : \n"+t.get(i).toString());
-        codex.add(t.get(i));
+        ajout(t.get(i));
     }
   }
   public void retrait(Tache t){
     if(codex.contains(t)){
-      System.out.println("On retire la tache "+t.get_titre());
 			codex.remove(t);
     }
   }
   public void retrait(int n){
     int nb = codex.size();
     if(n<=nb){
-      System.out.println("On retire la tache "+codex.get(n).get_titre()+" du codex");
       codex.remove(codex.get(n));
     }
   }
-/*
-  public boolean contient(Tache t)
-  {
-    return codex.contains(t);
-  }
 
-  public boolean contient(Categorie p)
-  {
-    return categories.contains(p);
+  public void ajouter(String s){
+    if(!categories.contains(s))
+      categories.add(s);
   }
-  public Categorie get(int i)
+  public void modifier(String old_cat, String s)
   {
-     int size=categories.size();
-      if(i<size)
-        return categories.get(i);
-      else
-        return categories.get(0);
-  }
-
-  public void ajout(Categorie p)
-  {
-    if(!categories.contains(p))
-      categories.add(p);
-  }
-
-  public void modifier(Categorie p, String s)
-  {
-    if(categories.contains(p)){
+    if(categories.contains(old_cat)){
       int size=codex.size();
       for(int i=0; i<size; ++i){
-        if(codex.get(i).get_categorie().get()==p.get()){
+        if(getCategorie(i).equals(old_cat)){
           codex.get(i).set_categorie(s);
         }
       }
-      categories.remove(p);
-      categories.add(new Categorie(s));
+      categories.remove(old_cat);
+      categories.add(s);
     }
   }
-  public void retrait(Categorie p)
+  public void retrait(String s)
   {
-    if(categories.contains(p)){
+    if(categories.contains(s)){
       int size=codex.size();
       for(int i=0; i<size; ++i){
-        if(codex.get(i).get_categorie().get()==p.get()){
+        if(codex.get(i).get_categorie()==s){
           codex.get(i).set_categorie("Sans_Categorie");
         }
       }
-      categories.remove(p);
+      categories.remove(s);
     }
   }
 
-  public void afficheCollection()
+  public void afficheCodex()
   {
     int size=codex.size();
     System.out.println(size+" tâche(s) restante(s) :");
@@ -275,14 +216,14 @@ public void archiver_Tache(Tache t)
   public void afficheCategories()
   {
     String sum = "Les différentes catégories sont : [";
-    for(Categorie a : categories) {
-    	    sum+=a.get()+", ";
+    for(String s : categories) {
+    	    sum+=s+", ";
     }
     sum+="]";
     System.out.println(sum);
   }
 
-*/
+
   public void tri_echeance(){
     System.out.println("On trie...");
     Collections.sort(codex, new DateComparator());
