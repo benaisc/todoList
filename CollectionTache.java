@@ -29,6 +29,7 @@ public class CollectionTache
     File file = new File(filePath);
 
     if(file.exists()){
+      System.out.println("Initialisation de nos tâches...");
       try{
         Scanner scanner=new Scanner(new File(filePath));
         while(scanner.hasNextLine()){
@@ -188,6 +189,7 @@ public void archiver_Tache(Tache t)
   }
   public void ajout(Tache t){
     if(!codex.contains(t))
+      System.out.println("On ajoute la tache : \n"+t.toString());
       codex.add(t);
   }
   public void ajout(ArrayList<Tache> t){
@@ -197,8 +199,19 @@ public void archiver_Tache(Tache t)
     }
   }
   public void retrait(Tache t){
-    if(codex.contains(t))
+    if(codex.contains(t)){
+      System.out.println("On retire la tache "+t.get_titre());
 			codex.remove(t);
+    }
+  }
+  public void retrait(String title){
+    int nb = codex.size();
+    for(int i=0; i<nb; ++i){
+      if(codex.get(i).get_titre().equals(title)){
+        System.out.println("On retire la tache "+codex.get(i).get_titre());
+        codex.remove(codex.get(i));
+      }
+    }
   }
 /*
   public boolean contient(Tache t)
@@ -273,6 +286,7 @@ public void archiver_Tache(Tache t)
 
 */
   public void tri_echeance(){
+    System.out.println("On trie...");
     Collections.sort(codex, new DateComparator());
   }
 }

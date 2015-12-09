@@ -3,7 +3,6 @@ package todoList;
 
 public class TachePonctuelle extends Tache
 {
-
   public TachePonctuelle(String fin, String titre)
   {
     super(fin,titre);

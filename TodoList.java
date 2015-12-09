@@ -3,14 +3,15 @@ package todoList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class TodoList extends JFrame implements WindowListener
 {
-	protected JPanel pGauche, pDroite;
-	protected JButton b1,b2,b3,b4;
-	protected JTable table;
-	protected JScrollPane scrollpane;
-	protected CollectionTache collec;
+	private JPanel pGauche, pDroite;
+	private JButton b1,b2,b3;
+	private JTable table;
+	private JScrollPane scrollpane;
+	private CollectionTache collec;
 
 	public TodoList()
 	{
@@ -36,19 +37,34 @@ public class TodoList extends JFrame implements WindowListener
 	}
 
 	public void init_taches(){
+		System.out.println("Initialisation affichage Taches");
 		int nbTaches=collec.nbTaches();
-		table=new JTable(nbTaches+1,1);
-		scrollpane=new JScrollPane(table);
 		if(nbTaches>0){
-			for(int i=0; i<nbTaches; i++){
-				table.setValueAt(collec.getTache(i),i,0);
+			table=new JTable(new DefaultTableModel(nbTaches, 1){
+				//On rend les cellules non éditables
+				public boolean isCellEditable(int row, int column)
+				{
+					return false;
+				}
+			});
+			scrollpane=new JScrollPane(table);
+			if(nbTaches>0){
+				for(int i=0; i<nbTaches; i++){
+					table.setValueAt(collec.getTache(i),i,0);
+				}
 			}
+			table.setFocusable(false);
+			table.setRowSelectionAllowed(true);
+			pDroite.add(scrollpane);
 		}
 		else{
+			table=new JTable(nbTaches+1, 1);
 			table.setValueAt("Encore aucune tâche !",0,0);
+			table.setEnabled(false);
+			pDroite.add(table);
 		}
-		table.setEnabled(false);//empeche l'interation avec les cellules
-		pDroite.add(scrollpane);
+
+
 		pack();
 	}
 
@@ -56,10 +72,12 @@ public class TodoList extends JFrame implements WindowListener
 		b1 = new JButton("Add Task");
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
+				System.out.println("Instance de CreerTache lancée");
 				CreerTache a=new CreerTache();
 				a.addWindowListener(new WindowAdapter(){
 					public void windowClosing(WindowEvent e){
 						collec.ajout(a.fetch());
+						collec.tri_echeance();
 						pDroite.removeAll();
 						init_taches();
 						pack();
@@ -69,21 +87,46 @@ public class TodoList extends JFrame implements WindowListener
 				a.setVisible(true);
 			}
 		});
+
 		b2 = new JButton("MaJ Task");
 		b2.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
-				ModifTache a=new ModifTache(collec);
-				a.setVisible(true);
+				int[] selection = table.getSelectedRows();
+				int selected = selection.length;
+				for (int i = 0; i < selected; i++) {
+					selection[i] = table.convertRowIndexToModel(selection[i]);
+					System.out.println("Tache séléctionnée lignes : "+selection[i]);
+				}
+
+				if(selected==0 || selected>1){
+					ModifTache a=new ModifTache();
+					a.addWindowListener(new WindowAdapter(){
+						public void windowClosing(WindowEvent e){
+							a.removeAll();
+							a.dispose();
+						}
+					});
+					a.setVisible(true);
+				}
+				else{
+					ModifTache a=new ModifTache(collec,selection[0]);
+					a.addWindowListener(new WindowAdapter(){
+						public void windowClosing(WindowEvent e){
+							//Supprimer la tâche selected
+							//a.fetch la nouvelle tache
+							pDroite.removeAll();
+							init_taches();
+							pack();
+							a.dispose();
+						}
+					});
+					a.setVisible(true);
+				}
 			}
 		});
-		b3 = new JButton("Archive Task");
+
+		b3 = new JButton("Show Archived Tasks");
 		b3.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				System.out.println("Souris cliquée en Archive Task");
-			}
-		});
-		b4 = new JButton("Show Archived Tasks");
-		b4.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
 				System.out.println("Souris cliquée en Show Archived Tasks");
 			}
@@ -92,7 +135,6 @@ public class TodoList extends JFrame implements WindowListener
 		pGauche.add(b1);
 		pGauche.add(b2);
 		pGauche.add(b3);
-		pGauche.add(b4);
 		pack();
 	}
 
