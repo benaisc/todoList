@@ -1,11 +1,11 @@
 ______ RAPPORT BENAIS-HUGOT ______
 
 I- Description des classes
-	Partie Metier : 
-		-Categorie : 
+	Partie Metier :
+		-Categorie :
 			Les catégories sont représentées par une classe catégorie contenant un attribut String désignant la catégorie
 
-		-Tache : 
+		-Tache :
 			Les taches sont représentées dans une classe abstraite comprenant une String titre, une Catégorie, une Date de début et de fin
 
 		-TachePonctuelle / TacheLongCours :
@@ -14,47 +14,50 @@ I- Description des classes
 		-CollectionTache :
 			La classe permettant de gérer l'ensemble des taches et catégories que l'on stock dans deux ArrayList
 
-	Partie Graphique : 
-		-TodoList : 
+	Partie Graphique :
+		-TodoList :
 			La classe TodoList représente la fenêtre principale de l'affichage graphique; Elle permet l'affichage de la CollectionTache d'un utilisateur ainsi que sa gestion via 3 boutons :
 				Ajouter Tache : Ouvre une fenêtre instance de CreerTache
 				Modifier Tache : Ouvre une fenêtre instance de ModifTache
 				Tache Archivées : Ouvre une fenêtre instance de TacheArchive
 
-		-CreerTache : 
+		-CreerTache :
 			Une fenêtre contenant les différents champs nécessaire à l'instanciation d'une tâche
 			Un bouton permettant la création d'une nouvelle tache pour notre CollectionTache
 
-		-ModifTache : 
+		-ModifTache :
 			Une fenêtre contenant une liste cliquable des titres de nos taches initialisant les différents champs nécessaire à la modification de la tâche
 			Un bouton permettant la validation de la modification
 
-		-TacheArchive : 
+		-TacheArchive :
 
 
 II- Choix effectués
-	Partie Metier : 
-		Categorie : 
-			
+	Partie Metier :
+		-Categorie :
 
-		-Tache : 
-			
+
+		-Tache :
+
 
 		-TachePonctuelle / TacheLongCours :
-			
 
-		-CollectionTache :
 
-	Partie Graphique : 
+		-Serialization
+			J'ai effectué la serialization dans un fichier texte, les données y sont représentées ainsi:
+			Titre d'une TacheLongCours
+			date_deb date_fin categorie avancement
+			Titre d'une TachePonctuelle
+			date_deb categorie
+			...etc
+
+	Partie Graphique :
 		-TodoList :
 			La fenêtre d'affichage TodoList est mise à jour à la fermeture d'une frame CreerTache ou ModifTache
 
-		-CreerTache : 
+		-CreerTache :
 			J'ai fais le choix de remplir une ArrayList de tâches au fur et à mesure de l'ajout successif de tâches, et de ne les ajouter à CollectionTache qu'à la fermeture de la fenêtre CreerTache.
 			Mettre une date de fin à une tache initialise une TacheLongCours, sinon TachePonctuelle
 
-		-ModifTache : 
+		-ModifTache :
 			J'ai fais le choix d'afficher une liste des titres des taches de CollectionTache dans le but de pouvoir identifier la Tache en question et l'afficher dans différents champs modifiables.
-
-
-

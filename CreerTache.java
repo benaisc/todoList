@@ -7,16 +7,21 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-/*Add_Task
-	-Ouvre une fenetre contenant des JTextFields et 1 JButton 'Send'
-	-Return une liste de taches des JTextFields sendés successifs*/
+
+/*
+CreerTache permet l'initialisation d'une nouvelle tâche via
+une Fenêtre contenant 4 champs (titre, categorie, debut, fin) et
+un bouton send qui remplit un Array qui sera récup par
+notre TodoList pour ajouter ces nouvelles tâches à la Collection
+/!\Donner une date de fin à une tache initialise une TacheLongCours, sinon, Ponctuelle
+*/
 public class CreerTache extends JFrame
 {
 	protected JPanel p;
 	protected JLabel l1,l2,l3,l4;
 	protected JButton b1;
 	protected JTextField t1,t2,t3,t4;
-	protected ArrayList<Tache> t; //VALEUR A RECUP AU Send
+	protected ArrayList<Tache> t;
 
 	public CreerTache()
 	{
@@ -49,11 +54,16 @@ public class CreerTache extends JFrame
 		b1 = new JButton("Add");
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
-				if(t4.getText().equals("dd/mm/yyyy")){
-					t.add(new TachePonctuelle(t3.getText(),t1.getText(),t2.getText()));
+				String tit,c,dd,df;
+				tit=t1.getText();
+				c=t2.getText();
+				dd=t3.getText();
+				df=t4.getText();
+				if(df.equals("dd/mm/yyyy") || df.equals("")){
+					t.add(new TachePonctuelle(dd, tit, c));
 				}
 				else{
-					t.add(new TacheLongCours(t3.getText(),t4.getText(),t1.getText(),t2.getText()));
+					t.add(new TacheLongCours(dd, df, tit, c));
 				}
 				t1.setText("");
 				t2.setText("");
@@ -65,8 +75,8 @@ public class CreerTache extends JFrame
 
 		pack();
 	}
+
 	public ArrayList<Tache> fetch(){
 		return t;
 	}
-
 }

@@ -38,17 +38,17 @@ public class CollectionTache
           StringTokenizer st = new StringTokenizer(line);
 
           String dateD=st.nextToken();
-          String dateF=st.nextToken();
-          String cat=st.nextToken();
+          String idk=st.nextToken();
 
           Tache T;
           if(st.hasMoreTokens()){
-            T=new TacheLongCours(dateD,dateF,title,cat);
+            String cat=st.nextToken();
+            T=new TacheLongCours(dateD, idk, title, cat);
             String avance=st.nextToken();
             T.setAvancement(Integer.parseInt(avance));
           }
           else{
-            T=new TachePonctuelle(dateD,dateF,title,cat);
+            T=new TachePonctuelle(dateD, title, idk);
           }
           codex.add(T);
         }
@@ -90,7 +90,7 @@ public class CollectionTache
     try{
       if(file.createNewFile()){
         FileWriter writer = new FileWriter(file);
-        System.out.println ("Création du fichier taches réussie");
+        System.out.println ("Création du fichier taches réussie, on le rempli..");
         int size=codex.size();
         for(int i=0; i<size; ++i){
           String s=codex.get(i).toWrite();
@@ -204,13 +204,11 @@ public void archiver_Tache(Tache t)
 			codex.remove(t);
     }
   }
-  public void retrait(String title){
+  public void retrait(int n){
     int nb = codex.size();
-    for(int i=0; i<nb; ++i){
-      if(codex.get(i).get_titre().equals(title)){
-        System.out.println("On retire la tache "+codex.get(i).get_titre());
-        codex.remove(codex.get(i));
-      }
+    if(n<=nb){
+      System.out.println("On retire la tache "+codex.get(n).get_titre()+" du codex");
+      codex.remove(codex.get(n));
     }
   }
 /*

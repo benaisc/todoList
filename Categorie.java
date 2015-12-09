@@ -23,7 +23,7 @@ public class Categorie
 		nom=s;
 	}
 
-	public boolean egal(String s){
+	public boolean equals(String s){
 		return nom.equals(s);
 	}
 	public boolean equals(Categorie c){

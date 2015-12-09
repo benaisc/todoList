@@ -3,19 +3,10 @@ package todoList;
 
 public class TachePonctuelle extends Tache
 {
-  public TachePonctuelle(String fin, String titre)
+  public TachePonctuelle(String deb, String titre, String categorie)
   {
-    super(fin,titre);
+    super(deb,titre,categorie);
   }
-  public TachePonctuelle(String fin, String titre, String categorie)
-  {
-    super(fin,titre,categorie);
-  }
-  public TachePonctuelle(String deb, String fin, String titre, String categorie)
-  {
-    super(deb,fin,titre,categorie);
-  }
-
 
   public void setAvancement(int pourcentage)
   {

@@ -14,32 +14,14 @@ public abstract class Tache
 	protected Categorie categorie;
 
 
-	//Ne garder que le constructeur full ?
-
-	public Tache(String fin, String titre)
+	public Tache(String deb, String titre, String cat)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     try{
-			Date dateF = formatter.parse(fin);
+			Date date = formatter.parse(deb);
 			dateDeb = new Date();
 			echeance = new Date();
-			echeance.setTime(dateF.getTime());
-    }catch(ParseException e){
-    	e.printStackTrace();
-  	}
-		categorie=new Categorie();
-		intitule = titre;
-		avancement = 0;
-	}
-
-	public Tache(String fin, String titre, String cat)
-	{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    try{
-			Date dateF = formatter.parse(fin);
-			dateDeb = new Date();
-			echeance = new Date();
-			echeance.setTime(dateF.getTime());
+			dateDeb.setTime(date.getTime());
     }catch(ParseException e){
     	e.printStackTrace();
   	}
@@ -108,9 +90,9 @@ public abstract class Tache
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		String s = intitule+" de Catégorie "+categorie.get()+
-		"; du "+formatter.format(dateDeb)+" au "+formatter.format(echeance)+";";
+		"; Debut "+formatter.format(dateDeb)+";";
 		if(this instanceof TacheLongCours)
-			s+=" d'avancement : "+avancement+"%";
+			s+=" Fin "+formatter.format(echeance)+"; D'avancement : "+avancement+"%";
 
 		return s;
 	}
@@ -123,7 +105,7 @@ public abstract class Tache
 		if(this instanceof TacheLongCours)
 			s=intitule+"\n"+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+categorie.get()+" "+avancement+"\n";
 		else
-			s=intitule+"\n"+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+categorie.get()+"\n";
+			s=intitule+"\n"+formatter.format(dateDeb)+" "+categorie.get()+"\n";
 
 		return s;
 	}
