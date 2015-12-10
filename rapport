@@ -40,7 +40,9 @@ II- Choix effectués
 		-Tache :
 
 
-		-TachePonctuelle / TacheLongCours :
+		-Archivage
+			L'archivage d'une tache ne s'effectue qu'après confirmation du client,
+			une tache échue n'à de différence qu'à l'affichage de celle-ci
 
 
 		-Serialization

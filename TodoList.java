@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.TableCellRenderer;
+import java.util.Date;
 /*
 TodoList gère l'affichage de notre Collection ainsi que l'interaction
 avec celles-ci via 3 boutons : Ajout, Modifier, Voir Tache Archivees
@@ -43,6 +44,8 @@ public class TodoList extends JFrame implements WindowListener
 			public void windowClosing(WindowEvent e){
 				if(collec.nbTaches()>0){
 					collec.close_Tache();
+				if(collec.nbArchive()>0)
+					collec.close_Archive();
 				}
 				dispose();
 			}
@@ -57,11 +60,23 @@ public class TodoList extends JFrame implements WindowListener
 		if(nbTaches>0){
 			table=new JTable(new DefaultTableModel(nbTaches, 1){
 				//On rend les cellules non éditables
-				public boolean isCellEditable(int row, int column)
-				{
-					return false;
+				public boolean isCellEditable(int row, int column){return false;}
+			}){
+				public Component prepareRenderer(TableCellRenderer rend, int row, int col){
+					Component c = super.prepareRenderer(rend,row,col);
+					//Objet value = getModel().getValueAt(row,col);
+					Date dateJour = new Date();
+					if(getSelectedRow() == row){
+						if(collec.getEcheance(row).before(dateJour)){
+							c.setBackground(Color.red);
+						}
+					}
+					else{
+						c.setBackground(Color.white);
+					}
+					return c;
 				}
-			});
+			};
 			scrollpane=new JScrollPane(table);
 			if(nbTaches>0){
 				for(int i=0; i<nbTaches; i++){

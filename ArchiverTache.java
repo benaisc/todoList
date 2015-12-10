@@ -29,7 +29,6 @@ public class ArchiverTache extends JFrame
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
 					c.archiver_Tache(i);
-					c.retrait(i);
 					dispose();
 			}
 		});
