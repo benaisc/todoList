@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.lang.String;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 /*
 ModifTache permet la création d'une nouvelle tâche via
@@ -47,12 +48,14 @@ public class ModifTache extends JFrame
 		p.add(l3);
 		p.add(t3);
 
+		l4 = new JLabel("Date fin : ");
+		t4 = new JTextField(formatter.format(c.getEcheance(i)),20);
+		p.add(l4);
+		p.add(t4);
+
 		if(c.getTache(i) instanceof TacheLongCours){
+			//TODO: avancement
 			type_tache=true;
-			l4 = new JLabel("Date fin : ");
-			t4 = new JTextField(formatter.format(c.getEcheance(i)),20);
-			p.add(l4);
-			p.add(t4);
 		}
 		else{type_tache=false;}
 
@@ -74,13 +77,18 @@ public class ModifTache extends JFrame
 	}
 
 	public Tache fetch(){
-		if(type_tache){
-			return new TacheLongCours(t3.getText(),t4.getText(),t1.getText(),t2.getText());
-		}
-		else{
-			return new TachePonctuelle(t3.getText(),t1.getText(),t2.getText());
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try{
+			if(type_tache)
+				return new TacheLongCours(formatter.parse(t3.getText()),formatter.parse(t4.getText()),t1.getText(),t2.getText());
+			else
+				return new TachePonctuelle(formatter.parse(t3.getText()),formatter.parse(t4.getText()),t1.getText(),t2.getText());
+		}catch(ParseException err){
+			err.printStackTrace();
+			return new TachePonctuelle();
 		}
 	}
+
 	public String fetch_cat(){
 		return t2.getText();
 	}

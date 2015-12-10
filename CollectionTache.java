@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.io.File;
@@ -37,20 +39,26 @@ public class CollectionTache
           String line = scanner.nextLine();
           StringTokenizer st = new StringTokenizer(line);
 
-          String dateD=st.nextToken();
-          String idk=st.nextToken();
+          String dd=st.nextToken();
+          String df=st.nextToken();
+          String cat=st.nextToken();
 
-          Tache T;
-          if(st.hasMoreTokens()){
-            String cat=st.nextToken();
-            T=new TacheLongCours(dateD, idk, title, cat);
-            String avance=st.nextToken();
-            T.setAvancement(Integer.parseInt(avance));
+
+          SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+          try{
+            if(st.hasMoreTokens()){
+              Tache t;
+              t=new TacheLongCours(formatter.parse(dd), formatter.parse(df), title, cat);
+              String avance=st.nextToken();
+              t.setAvancement(Integer.parseInt(avance));
+              codex.add(t);
+            }
+            else{
+              codex.add(new TachePonctuelle(formatter.parse(dd), formatter.parse(df), title, cat));
+            }
+          }catch(ParseException err){
+            err.printStackTrace();
           }
-          else{
-            T=new TachePonctuelle(dateD, title, idk);
-          }
-          codex.add(T);
         }
         scanner.close();
       }catch(FileNotFoundException fnf){
@@ -110,7 +118,7 @@ public class CollectionTache
     else{
       try{
         if(file.createNewFile()){
-          System.out.println ("Création du fichier taches_archivees réussie");
+          System.out.println ("Création du fichier de tâches archivées");
           try{
         		FileWriter writer = new FileWriter(file);
         		String s=codex.get(i).toWrite();
@@ -120,9 +128,6 @@ public class CollectionTache
         	} catch (IOException e){
         		System.out.println ("Erreur " + e.getMessage());
         	}
-        }
-        else{
-          System.out.println ("Création du fichier taches_archivees echouée");
         }
       }
       catch (IOException e){

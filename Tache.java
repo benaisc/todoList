@@ -13,36 +13,20 @@ public abstract class Tache
 	protected int avancement;
 	protected String categorie;
 
-
-	public Tache(String deb, String titre, String cat)
+	public Tache()
 	{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    try{
-			Date date = formatter.parse(deb);
-			dateDeb = new Date();
-			echeance = new Date();
-			dateDeb.setTime(date.getTime());
-    }catch(ParseException e){
-    	e.printStackTrace();
-  	}
-		categorie=cat;
-		intitule = titre;
-		avancement = 0;
+		dateDeb = new Date();
+		echeance = new Date();
+		categorie="Sans_Categorie";
+		intitule = "Sans_Titre";
+		avancement=0;
 	}
-
-	public Tache(String deb, String fin, String titre, String cat)
+	public Tache(Date deb, Date fin, String titre, String cat)
 	{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		try{
-			Date dateD = formatter.parse(deb);
-			Date dateF = formatter.parse(fin);
-			dateDeb = new Date();
-			dateDeb.setTime(dateD.getTime());
-			echeance = new Date();
-			echeance.setTime(dateF.getTime());
-		}catch(ParseException e){
-			e.printStackTrace();
-		}
+		dateDeb = new Date();
+		echeance = new Date();
+		dateDeb.setTime(deb.getTime());
+		echeance.setTime(fin.getTime());
 		categorie=cat;
 		intitule = titre;
 		avancement=0;
@@ -83,29 +67,7 @@ public abstract class Tache
 	}
 
 	public abstract void setAvancement(int pourcentage);
+	public abstract String toString();
+	public abstract String toWrite();
 
-	public String toString()
-	{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-		String s = intitule+" de Catégorie "+categorie+
-		"; Debut "+formatter.format(dateDeb)+";";
-		if(this instanceof TacheLongCours)
-			s+=" Fin "+formatter.format(echeance)+"; D'avancement : "+avancement+"%";
-
-		return s;
-	}
-
-	public String toWrite()
-  {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-		String s;
-		if(this instanceof TacheLongCours)
-			s=intitule+"\n"+formatter.format(dateDeb)+" "+formatter.format(echeance)+" "+categorie+" "+avancement+"\n";
-		else
-			s=intitule+"\n"+formatter.format(dateDeb)+" "+categorie+"\n";
-
-		return s;
-	}
 }

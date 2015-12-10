@@ -7,6 +7,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 /*
 CreerTache permet l'initialisation d'une nouvelle tâche via
@@ -18,7 +19,8 @@ notre TodoList pour ajouter ces nouvelles tâches à la Collection
 public class CreerTache extends JFrame
 {
 	protected JPanel p;
-	protected JLabel l1,l2,l3,l4;
+	protected JLabel l1,l2,l3,l4,lsupp;
+	protected JCheckBox chk;
 	protected JButton b1;
 	protected JTextField t1,t2,t3,t4;
 	protected ArrayList<Tache> t;
@@ -51,25 +53,47 @@ public class CreerTache extends JFrame
 		p.add(l4);
 		p.add(t4);
 
+		lsupp = new JLabel("Tache au long cours ? : ");
+		chk=new JCheckBox();
+		p.add(lsupp);
+		p.add(chk);
+
 		b1 = new JButton("Add");
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
 				String tit,c,dd,df;
 				tit=t1.getText();
+				if(tit.equals("")){tit="Sans_Titre";}
 				c=t2.getText();
-				if(c.equals("") || c.equals("null")){c="Sans_Categorie";}
+				if(c.equals("")){c="Sans_Categorie";}
 				dd=t3.getText();
 				df=t4.getText();
-				if(df.equals("dd/mm/yyyy") || df.equals("")){
-					t.add(new TachePonctuelle(dd, tit, c));
+				if(df.equals("dd/mm/yyyy") || df.equals("")){df=dd;}
+				//TEST
+				boolean verify=true;
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				try{
+					if(!chk.isSelected()){
+						t.add(new TachePonctuelle(formatter.parse(dd), formatter.parse(df), tit, c));
+					}
+					else{
+						t.add(new TacheLongCours(formatter.parse(dd), formatter.parse(df), tit, c));
+					}
+				}catch(ParseException err){
+					verify=false;
+					err.printStackTrace();
+				}
+				//Ssi les formats de date entrés sont valides
+				if(verify){
+					t1.setText("");
+					t2.setText("");
+					t3.setText(formatter.format(dateJour));
+					t4.setText("dd/mm/yyyy");
 				}
 				else{
-					t.add(new TacheLongCours(dd, df, tit, c));
+					t3.setText(formatter.format(dateJour));
+					t4.setText("dd/mm/yyyy");
 				}
-				t1.setText("");
-				t2.setText("");
-				t3.setText(formatter.format(dateJour));
-				t4.setText("dd/mm/yyyy");
 			}
 		});
 		p.add(b1);
