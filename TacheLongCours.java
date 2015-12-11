@@ -27,22 +27,22 @@ public class TacheLongCours extends Tache
   }
 
   public boolean isLineaire(){
-    Calendar c = Calendar.getInstance();
+    Calendar dj = Calendar.getInstance();
 
     if(avancement<=25){
-      c.add(Calendar.DAY_OF_MONTH,4);
-      return c.before(echeance);
+      dj.add(Calendar.DAY_OF_MONTH,4);
+      return echeance.after(dj.getTime());
     }
     else if(avancement<=50){
-      c.add(Calendar.DAY_OF_MONTH,2);
-      return c.before(echeance);
+      dj.add(Calendar.DAY_OF_MONTH,2);
+      return echeance.after(dj.getTime());
     }
     else if(avancement<=75){
-      c.add(Calendar.DAY_OF_MONTH,1);
-      return c.before(echeance);
+      dj.add(Calendar.DAY_OF_MONTH,1);
+      return echeance.after(dj.getTime());
     }
     else{
-      return c.before(echeance);
+      return echeance.after(dj.getTime());
     }
   }
 

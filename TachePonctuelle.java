@@ -17,8 +17,11 @@ public class TachePonctuelle extends Tache
   }
 
   public void setAvancement(int pourcentage){ }
-  public boolean isLineaire(){return true;}
-  
+  public boolean isLineaire(){
+    Date dday=new Date();
+    return dday.before(echeance);
+  }
+
   public String toWrite()
   {
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

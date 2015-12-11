@@ -62,18 +62,18 @@ public class TodoList extends JFrame implements WindowListener
 				public boolean isCellEditable(int row, int column){return false;}
 			}){
 				public Component prepareRenderer(TableCellRenderer rend, int row, int col){
-					Component c = super.prepareRenderer(rend,row,col);
+					Component compo = super.prepareRenderer(rend,row,col);
 					//Objet value = getModel().getValueAt(row,col);
 					Date dateJour = new Date();
 					if(getSelectedRow() == row){
-						if(collec.getEcheance(row).before(dateJour) || !collec.isLineaire(row)){
-							c.setBackground(Color.red);
+						if(!collec.isLineaire(row)){
+							compo.setBackground(Color.red);
 						}
 					}
 					else{
-						c.setBackground(Color.white);
+						compo.setBackground(Color.white);
 					}
-					return c;
+					return compo;
 				}
 			};
 			scrollpane=new JScrollPane(table);
@@ -209,5 +209,5 @@ public class TodoList extends JFrame implements WindowListener
 	}
 	public void windowStateChanged(WindowEvent e) {
 	}
-	
+
 }

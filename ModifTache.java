@@ -75,6 +75,7 @@ public class ModifTache extends JFrame
 					if(isLongCours){
 						c.setAvancement(fetch_avancement());
 					}
+					System.out.println("Tache modifiée : "+c.toString());
 					dispose();
 				}
 			}
@@ -115,12 +116,12 @@ public class ModifTache extends JFrame
 	}
 
 	public String fetch_categorie(){
-		String oneWordCat=t2.getText();
+		String categ=t2.getText();
 		//match : no spaces ou null
-		if(!oneWordCat.matches("/^\\S/")){
-			oneWordCat="Sans_Categorie";
+		if(!categ.matches("^\\S*$")){
+			categ="Sans_Categorie";
 		}
-		return oneWordCat;
+		return categ;
 	}
 
 	public Date fetch_deb(){

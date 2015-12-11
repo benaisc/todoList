@@ -1,7 +1,7 @@
 CXX = javac
 EXEC = Main
 SRC = $(wildcard *.java)
-CXXjar = jar cvfe todoList.jar TodoList
+CXXjar = jar cvfe todoList.jar Main
 SRCc = $(wildcard *.class)
 NAME = todoList_src
 SRCsup = makefile
