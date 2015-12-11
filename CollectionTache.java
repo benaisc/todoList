@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
 import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 
 public class CollectionTache
 {
@@ -50,11 +51,8 @@ public class CollectionTache
           SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
           try{
             if(st.hasMoreTokens()){
-              Tache t;
-              t=new TacheLongCours(formatter.parse(dd), formatter.parse(df), title, cat);
               String avance=st.nextToken();
-              t.setAvancement(Integer.parseInt(avance));
-              codex.add(t);
+              codex.add(new TacheLongCours(formatter.parse(dd), formatter.parse(df), title, cat, Integer.parseInt(avance)));
             }
             else{
               codex.add(new TachePonctuelle(formatter.parse(dd), formatter.parse(df), title, cat));
@@ -161,6 +159,9 @@ public class CollectionTache
   public Date getEcheance(int i){
 	   return codex.get(i).get_echeance();
   }
+  public int getAvancement(int i){
+    return codex.get(i).get_avancement();
+  }
 
   public void ajout(Tache t){
     if(!codex.contains(t)){
@@ -224,6 +225,10 @@ public class CollectionTache
       retrait(i);
     }
   }
+
+  public boolean isLineaire(int i){
+    return codex.get(i).isLineaire();
+  }
   /*
   //rempli archive des tâches échues non archivées du codex
   public void start_archivage(){
@@ -277,4 +282,5 @@ class DateComparator implements Comparator<Tache> {
        return 0;
      }
    }
+   
 }

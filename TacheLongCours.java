@@ -2,8 +2,9 @@ package todoList;
 
 import java.lang.String;
 import java.util.Date;
+import java.util.Calendar;
 import java.text.SimpleDateFormat;
-//import java.text.ParseException; try/catch ?
+
 
 public class TacheLongCours extends Tache
 {
@@ -11,20 +12,38 @@ public class TacheLongCours extends Tache
   {
     super();
   }
-
   public TacheLongCours(Date deb, Date fin, String titre, String categorie)
   {
     super(deb,fin,titre,categorie);
   }
+  public TacheLongCours(Date deb, Date fin, String titre, String categorie, int av)
+  {
+    super(deb,fin,titre,categorie,av);
+  }
 
-  //TODO: TEST pourcentage > 0 && avancement+pourcentage =< 100
   public void setAvancement(int pourcentage)
   {
-    int total = pourcentage+avancement;
+    avancement=pourcentage;
+  }
 
-    if(pourcentage>0 && total<=100)
-      avancement+=pourcentage;
-    //TODO: if(avancement+pourcentage >= 100) archiver la tâche
+  public boolean isLineaire(){
+    Calendar c = Calendar.getInstance();
+
+    if(avancement<=25){
+      c.add(Calendar.DAY_OF_MONTH,4);
+      return c.before(echeance);
+    }
+    else if(avancement<=50){
+      c.add(Calendar.DAY_OF_MONTH,2);
+      return c.before(echeance);
+    }
+    else if(avancement<=75){
+      c.add(Calendar.DAY_OF_MONTH,1);
+      return c.before(echeance);
+    }
+    else{
+      return c.before(echeance);
+    }
   }
 
   public String toWrite()

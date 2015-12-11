@@ -3,7 +3,6 @@ package todoList;
 import java.lang.String;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-//import java.text.ParseException; try/catch ?
 
 public class TachePonctuelle extends Tache
 {
@@ -17,9 +16,9 @@ public class TachePonctuelle extends Tache
     super(deb,fin,titre,categorie);
   }
 
-  public void setAvancement(int pourcentage)
-  { }
-
+  public void setAvancement(int pourcentage){ }
+  public boolean isLineaire(){return true;}
+  
   public String toWrite()
   {
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

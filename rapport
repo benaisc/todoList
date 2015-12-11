@@ -1,18 +1,16 @@
 ______ RAPPORT BENAIS-HUGOT ______
 
-I- Description des classes
+I- Description d'implémentation
 	Partie Metier :
-		-Categorie :
-			Les catégories sont représentées par une classe catégorie contenant un attribut String désignant la catégorie
-
 		-Tache :
-			Les taches sont représentées dans une classe abstraite comprenant une String titre, une Catégorie, une Date de début et de fin
+			Les taches sont représentées dans une classe abstraite dans le but de ne pouvoir être instanciées
 
 		-TachePonctuelle / TacheLongCours :
-			Les taches sont instanciables via l'une des deux classes, dans le but de pouvoir gérer différement les deux types de tâches.
+			Les taches sont instanciables via l'une des deux classes, dans le but de pouvoir gérer différement les deux types de tâches,
+			de manière invisible pour nôtre collection de tâches.
 
 		-CollectionTache :
-			La classe permettant de gérer l'ensemble des taches et catégories que l'on stock dans deux ArrayList
+			La classe permettant de gérer l'ensemble des tâches.
 
 	Partie Graphique :
 		-TodoList :
@@ -34,15 +32,11 @@ I- Description des classes
 
 II- Choix effectués
 	Partie Metier :
-		-Categorie :
+		-Categorisation : sujet respecté
 
 
-		-Tache :
-
-
-		-Archivage
-			L'archivage d'une tache ne s'effectue qu'après confirmation du client,
-			une tache échue n'à de différence qu'à l'affichage de celle-ci
+		-Retard
+			Le retard d'une tâche est représenté à l'affichage, onClick(redBackGround)
 
 
 		-Serialization
@@ -50,16 +44,13 @@ II- Choix effectués
 			Titre d'une TacheLongCours
 			date_deb date_fin categorie avancement
 			Titre d'une TachePonctuelle
-			date_deb categorie
+			date_deb date_fin categorie
 			...etc
 
-	Partie Graphique :
-		-TodoList :
-			La fenêtre d'affichage TodoList est mise à jour à la fermeture d'une frame CreerTache ou ModifTache
 
-		-CreerTache :
-			J'ai fais le choix de remplir une ArrayList de tâches au fur et à mesure de l'ajout successif de tâches, et de ne les ajouter à CollectionTache qu'à la fermeture de la fenêtre CreerTache.
-			Mettre une date de fin à une tache initialise une TacheLongCours, sinon TachePonctuelle
+		-Archivage
+			L'archivage d'une tache ne s'effectue qu'après demande et confirmation du client
+			La tâche est alors sérializée dans un fichier texte
 
-		-ModifTache :
-			J'ai fais le choix d'afficher une liste des titres des taches de CollectionTache dans le but de pouvoir identifier la Tache en question et l'afficher dans différents champs modifiables.
+
+III- Améliorations

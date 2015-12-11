@@ -2,16 +2,15 @@ package todoList;
 
 import java.util.Date;
 import java.lang.String;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
+
 
 public abstract class Tache
 {
+	protected String intitule;
+	protected String categorie;
 	protected Date dateDeb;
 	protected Date echeance;
-	protected String intitule;
 	protected int avancement;
-	protected String categorie;
 
 	public Tache()
 	{
@@ -23,13 +22,19 @@ public abstract class Tache
 	}
 	public Tache(Date deb, Date fin, String titre, String cat)
 	{
-		dateDeb = new Date();
-		echeance = new Date();
-		dateDeb.setTime(deb.getTime());
-		echeance.setTime(fin.getTime());
+		dateDeb = deb;
+		echeance = fin;
 		categorie=cat;
 		intitule = titre;
 		avancement=0;
+	}
+	public Tache(Date deb, Date fin, String titre, String cat, int av)
+	{
+		dateDeb = deb;
+		echeance = fin;
+		categorie=cat;
+		intitule = titre;
+		avancement=av;
 	}
 
 	public String get_titre()
@@ -48,6 +53,10 @@ public abstract class Tache
 	{
 		return echeance;
 	}
+	public int get_avancement()
+	{
+		return avancement;
+	}
 	public void set_titre(String s)
 	{
 		intitule=s;
@@ -56,17 +65,17 @@ public abstract class Tache
 	{
 		categorie=s;
 	}
+	public void set_debut(Date deb)
+	{
+		dateDeb=deb;
+	}
 	public void set_echeance(Date fin)
 	{
-		if(dateDeb.before(fin)){
-			echeance.setTime(fin.getTime());
-		}
-		else{
-			System.out.println("Erreur modification_echeance : échéance < dateDeb");
-		}
+		echeance=fin;
 	}
 
 	public abstract void setAvancement(int pourcentage);
+	public abstract boolean isLineaire();
 	public abstract String toString();
 	public abstract String toWrite();
 

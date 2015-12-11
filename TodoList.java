@@ -26,17 +26,17 @@ public class TodoList extends JFrame implements WindowListener
 		pGauche = new JPanel();
 		pGauche.setBackground(Color.black);
 		add(pGauche,"West");
-		pGauche.setPreferredSize(new Dimension(190,300));
+		pGauche.setPreferredSize(new Dimension(145,250));
 		pGauche.setLayout(new FlowLayout());
 
 		pDroite = new JPanel();
 		add(pDroite);
-		pDroite.setPreferredSize(new Dimension(750,300));
+		pDroite.setPreferredSize(new Dimension(650,250));
 		pDroite.setLayout(new GridLayout());
 
 		collec=new CollectionTache();
 
-		init_taches();
+		init_taches(true);
 		init_boutons();
 
 		//Fin de vie de l'application
@@ -54,8 +54,7 @@ public class TodoList extends JFrame implements WindowListener
 		pack();
 	}
 
-	public void init_taches(){
-		System.out.println("Init_Taches");
+	public void init_taches(boolean affich){
 		int nbTaches=collec.nbTaches();
 		if(nbTaches>0){
 			table=new JTable(new DefaultTableModel(nbTaches, 1){
@@ -67,7 +66,7 @@ public class TodoList extends JFrame implements WindowListener
 					//Objet value = getModel().getValueAt(row,col);
 					Date dateJour = new Date();
 					if(getSelectedRow() == row){
-						if(collec.getEcheance(row).before(dateJour)){
+						if(collec.getEcheance(row).before(dateJour) || !collec.isLineaire(row)){
 							c.setBackground(Color.red);
 						}
 					}
@@ -84,6 +83,7 @@ public class TodoList extends JFrame implements WindowListener
 				}
 			}
 			table.setFocusable(false);
+			table.setRowHeight(20);
 			table.setRowSelectionAllowed(true);
 			pDroite.add(scrollpane);
 		}
@@ -95,21 +95,24 @@ public class TodoList extends JFrame implements WindowListener
 		}
 
 		pack();
+		if(affich)
+			System.out.println("Init_Taches OK");
 	}
 
 	public void init_boutons(){
-		System.out.println("Init_Boutons");
 		b1 = new JButton("Ajouter");
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
 				CreerTache a=new CreerTache();
 				a.addWindowListener(new WindowAdapter(){
 					public void windowClosing(WindowEvent e){
-						collec.ajout(a.fetch());
-						collec.tri_echeance();
-						pDroite.removeAll();
-						init_taches();
-						pack();
+						if(a.isThere()){
+							collec.ajout(a.fetch());
+							collec.tri_echeance();
+							pDroite.removeAll();
+							init_taches(false);
+							pack();
+						}
 						a.dispose();
 					}
 				});
@@ -124,7 +127,6 @@ public class TodoList extends JFrame implements WindowListener
 				int selected = selection.length;
 				for (int i = 0; i < selected; i++) {
 					selection[i] = table.convertRowIndexToModel(selection[i]);
-					System.out.println("Tache séléctionnée lignes : "+selection[i]);
 				}
 
 				if(selected==0 || selected>1){
@@ -132,19 +134,17 @@ public class TodoList extends JFrame implements WindowListener
 					a.setVisible(true);
 				}
 				else{
-					ModifTache a=new ModifTache(collec,selection[0]);
+					ModifTache a=new ModifTache(collec.getTache(selection[0]));
 					String old_cat=collec.getCategorie(selection[0]);
 					a.addWindowListener(new WindowAdapter(){
 						public void windowClosing(WindowEvent e){
-							collec.retrait(selection[0]);
-							collec.ajout(a.fetch());
-							String new_cat=a.fetch_cat();
 							if(a.checkbox()){
-								System.out.println("Vous souhaitez modifier "+old_cat+" en "+new_cat);
-								collec.modifier(old_cat, new_cat);
+								String new_cat=a.fetch_categorie();
+								if(!old_cat.equals(new_cat))
+									collec.modifier(old_cat, new_cat);
 							}
 							pDroite.removeAll();
-							init_taches();
+							init_taches(false);
 							pack();
 							a.dispose();
 						}
@@ -157,12 +157,10 @@ public class TodoList extends JFrame implements WindowListener
 		b3 = new JButton("Archiver");
 		b3.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
-				System.out.println("Instance de ArchiverTache lancée");
 				int[] selection = table.getSelectedRows();
 				int selected = selection.length;
 				for (int i = 0; i < selected; i++) {
 					selection[i] = table.convertRowIndexToModel(selection[i]);
-					System.out.println("Tache séléctionnée lignes : "+selection[i]);
 				}
 
 				if(selected==0 || selected>1){
@@ -174,7 +172,7 @@ public class TodoList extends JFrame implements WindowListener
 					a.addWindowListener(new WindowAdapter(){
 						public void windowClosed(WindowEvent e){
 							pDroite.removeAll();
-							init_taches();
+							init_taches(false);
 							pack();
 							a.dispose();
 						}
@@ -188,6 +186,7 @@ public class TodoList extends JFrame implements WindowListener
 		pGauche.add(b2);
 		pGauche.add(b3);
 		pack();
+		System.out.println("Init_Boutons OK");
 	}
 
 	public void windowClosing(WindowEvent e) {
@@ -210,4 +209,5 @@ public class TodoList extends JFrame implements WindowListener
 	}
 	public void windowStateChanged(WindowEvent e) {
 	}
+	
 }

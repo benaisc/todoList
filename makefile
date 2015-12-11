@@ -1,18 +1,26 @@
 CXX = javac
-CXXFLAGS =
 EXEC = Main
 SRC = $(wildcard *.java)
+CXXjar = jar cvfe todoList.jar TodoList
+SRCc = $(wildcard *.class)
+NAME = todoList_src
+SRCsup = makefile
+
 
 all: $(EXEC)
 
 $(EXEC): $(SRC)
-	$(CXX) $(CXXFLAGS) $^
+	$(CXX) $^
+
+jar: $(SRCc)
+	make
+	$(CXXjar) $^
+
+init:
+	rm taches taches_archivees
 
 clean:
-	rm *.class categories taches taches_archivees
-
-SRCsup = $(wildcard *.java)
-NAME = todoList_src.tar.gz
+	rm $(SRCc)
 
 archive:
-	tar -czf $(NAME) $(SRCsup) $(SRC) makefile
+	tar -czf $(NAME) $(SRCsup) $(SRC)

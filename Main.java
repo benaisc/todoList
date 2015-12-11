@@ -10,14 +10,5 @@ public class Main
   	TodoList f=new TodoList();
   	f.setVisible(true);
   	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	/*TODO:
-    HANDLE LE ON_CLOSE
-    Handle suppression tache
-
-		Gérer les boutons :
-		Archieved_Tasks
-			-Ouvre une fenetre déroulante rempli des tache_archivee.txt
-	*/
   }
 }

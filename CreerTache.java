@@ -61,37 +61,48 @@ public class CreerTache extends JFrame
 		b1 = new JButton("Add");
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
-				String tit,c,dd,df;
-				tit=t1.getText();
-				if(tit.equals("")){tit="Sans_Titre";}
-				c=t2.getText();
-				if(c.equals("")){c="Sans_Categorie";}
-				dd=t3.getText();
-				df=t4.getText();
-				if(df.equals("dd/mm/yyyy") || df.equals("")){df=dd;}
-				//TEST
+				//TESTS
 				boolean verify=true;
-				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-				try{
-					if(!chk.isSelected()){
-						t.add(new TachePonctuelle(formatter.parse(dd), formatter.parse(df), tit, c));
-					}
-					else{
-						t.add(new TacheLongCours(formatter.parse(dd), formatter.parse(df), tit, c));
-					}
-				}catch(ParseException err){
-					verify=false;
-					err.printStackTrace();
+
+				String titr=t1.getText();
+				if(titr.equals("")){
+					titr="Sans_Titre";
 				}
-				//Ssi les formats de date entrés sont valides
+				String oneWordCat=t2.getText();
+				if(!oneWordCat.matches("/^\\S/")){
+					oneWordCat="Sans_Categorie";
+				}
+				//match : dd/mm/yyyy
+				String regex_date="^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\\d\\d$";
+				String dd=t3.getText();
+				String df=t4.getText();
+				if(!dd.matches(regex_date)){
+					verify=false;
+				}
+				if(!df.matches(regex_date)){
+					verify=false;
+				}
+
+				//Ssi les champs date sont valides
 				if(verify){
+					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+					try{
+						if(!chk.isSelected()){
+							t.add(new TachePonctuelle(formatter.parse(dd), formatter.parse(df), titr, oneWordCat));
+						}
+						else{
+							t.add(new TacheLongCours(formatter.parse(dd), formatter.parse(df), titr, oneWordCat));
+						}
+					}catch(ParseException err){
+						err.printStackTrace();
+					}
 					t1.setText("");
 					t2.setText("");
 					t3.setText(formatter.format(dateJour));
 					t4.setText("dd/mm/yyyy");
 				}
 				else{
-					t3.setText(formatter.format(dateJour));
+					t3.setText("dd/mm/yyyy");
 					t4.setText("dd/mm/yyyy");
 				}
 			}
@@ -99,6 +110,10 @@ public class CreerTache extends JFrame
 		p.add(b1);
 
 		pack();
+	}
+
+	public boolean isThere(){
+		return t.size()>0;
 	}
 
 	public ArrayList<Tache> fetch(){
