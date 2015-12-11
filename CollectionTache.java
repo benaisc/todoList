@@ -282,5 +282,5 @@ class DateComparator implements Comparator<Tache> {
        return 0;
      }
    }
-   
+
 }

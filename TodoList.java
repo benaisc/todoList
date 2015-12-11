@@ -8,7 +8,7 @@ import javax.swing.table.TableCellRenderer;
 import java.util.Date;
 /*
 TodoList gère l'affichage de notre Collection ainsi que l'interaction
-avec celles-ci via 3 boutons : Ajout, Modifier, Voir Tache Archivees
+avec celles-ci via 3 boutons : Ajout, Modifier, Archiver
 */
 
 public class TodoList extends JFrame implements WindowListener

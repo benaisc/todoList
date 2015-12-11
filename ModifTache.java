@@ -101,8 +101,9 @@ public class ModifTache extends JFrame
 	public boolean isThere(){
 		return (test_date(t3.getText()) && test_date(t4.getText()));
 	}
-	//match : dd/mm/yyyy
+
 	public boolean test_date(String date){
+		//match : dd/mm/yyyy
 		String regex_date="^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\\d\\d$";
 		return date.matches(regex_date);
 	}
@@ -117,11 +118,11 @@ public class ModifTache extends JFrame
 
 	public String fetch_categorie(){
 		String categ=t2.getText();
-		//match : no spaces ou null
-		if(!categ.matches("^\\S*$")){
-			categ="Sans_Categorie";
+		//match : string without spaces && ""
+		if(categ.matches("^\\S*$") && !categ.equals("")){
+			return categ;
 		}
-		return categ;
+		return "Sans_Categorie";
 	}
 
 	public Date fetch_deb(){

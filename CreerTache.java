@@ -69,7 +69,7 @@ public class CreerTache extends JFrame
 					titr="Sans_Titre";
 				}
 				String oneWordCat=t2.getText();
-				if(!oneWordCat.matches("/^\\S/")){
+				if(!oneWordCat.matches("^\\S*$") || oneWordCat.equals("")){
 					oneWordCat="Sans_Categorie";
 				}
 				//match : dd/mm/yyyy
