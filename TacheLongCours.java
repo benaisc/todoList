@@ -48,24 +48,11 @@ public class TacheLongCours extends Tache
 
   public String toWrite()
   {
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    String s;
-    s=intitule+"\n"+formatter.format(dateDeb)+
-      " "+formatter.format(echeance)+" "+categorie+
-      " "+avancement+"\n";
-
-    return s;
+    return super.toWrite()+" "+avancement+"\n";
   }
-  
+
   public String toString()
   {
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    String s;
-    s=intitule+" de Catégorie "+categorie+
-    "; Debut "+formatter.format(dateDeb)+
-    "; Fin "+formatter.format(echeance)+
-    "; D'avancement : "+avancement+"%";
-
-    return s;
+    return super.toString()+"; D'avancement : "+avancement+"%";
   }
 }

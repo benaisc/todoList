@@ -2,7 +2,7 @@ package todoList;
 
 import java.util.Date;
 import java.lang.String;
-
+import java.text.SimpleDateFormat;
 
 public abstract class Tache
 {
@@ -76,7 +76,23 @@ public abstract class Tache
 
 	public abstract void setAvancement(int pourcentage);
 	public abstract boolean isLineaire();
-	public abstract String toString();
-	public abstract String toWrite();
+	public String toWrite()
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String s;
+		s=intitule+"\n"+formatter.format(dateDeb)+
+			" "+formatter.format(echeance)+" "+categorie;
 
+		return s;
+	}
+	public String toString()
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String s;
+		s=intitule+" de Catégorie "+categorie+
+			"; Debut "+formatter.format(dateDeb)+
+			"; Fin "+formatter.format(echeance);
+
+		return s;
+	}
 }

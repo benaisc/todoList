@@ -11,7 +11,7 @@ all: $(EXEC)
 $(EXEC): $(SRC)
 	$(CXX) $^
 
-init:
+reinit:
 	rm taches taches_archivees
 
 clean:

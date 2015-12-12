@@ -3,7 +3,6 @@ package todoList;
 import java.lang.String;
 import java.util.Date;
 import java.util.Calendar;
-import java.text.SimpleDateFormat;
 
 
 public class TachePonctuelle extends Tache
@@ -28,22 +27,11 @@ public class TachePonctuelle extends Tache
 
   public String toWrite()
   {
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    String s;
-    s=intitule+"\n"+formatter.format(dateDeb)+
-      " "+formatter.format(echeance)+" "+categorie+"\n";
-
-    return s;
+    return super.toWrite()+"\n";
   }
 
   public String toString()
   {
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    String s;
-    s=intitule+" de Catégorie "+categorie+
-      "; Debut "+formatter.format(dateDeb)+
-      "; Fin "+formatter.format(echeance);
-
-    return s;
+    return super.toString();
   }
 }

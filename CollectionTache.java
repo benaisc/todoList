@@ -174,11 +174,6 @@ public class CollectionTache
         ajout(t.get(i));
     }
   }
-  public void retrait(Tache t){
-    if(codex.contains(t)){
-			codex.remove(t);
-    }
-  }
   public void retrait(int n){
     int nb = codex.size();
     if(n<=nb){
@@ -203,18 +198,6 @@ public class CollectionTache
       categories.add(s);
     }
   }
-  public void retrait(String s)
-  {
-    if(categories.contains(s)){
-      int size=codex.size();
-      for(int i=0; i<size; ++i){
-        if(codex.get(i).get_categorie()==s){
-          codex.get(i).set_categorie("Sans_Categorie");
-        }
-      }
-      categories.remove(s);
-    }
-  }
 
   public int nbArchive(){
      return archive.size();
@@ -228,6 +211,7 @@ public class CollectionTache
   public boolean isLineaire(int i){
     return codex.get(i).isLineaire();
   }
+
   /*
   //rempli archive des tâches échues non archivées du codex
   public void start_archivage(){
@@ -281,5 +265,4 @@ class DateComparator implements Comparator<Tache> {
        return 0;
      }
    }
-
-}
+ }
