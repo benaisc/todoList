@@ -25,6 +25,7 @@ public class CollectionTache
     start_taches();
 
     archive=new ArrayList<Tache>();
+    start_archives();
 
     categories=new ArrayList<String>();
     start_categories();
@@ -83,7 +84,6 @@ public class CollectionTache
     try{
       if(file.createNewFile()){
         FileWriter writer = new FileWriter(file);
-        System.out.println ("Création du fichier taches réussie, on le rempli..");
         int size=codex.size();
         for(int i=0; i<size; ++i){
           String s=codex.get(i).toWrite();
@@ -104,24 +104,9 @@ public class CollectionTache
   {
     File file = new File ("./todoList/taches_archivees");
     if(file.exists()){
-      System.out.println ("On append le fichier de tâches archivées..");
-      try{
-        FileWriter writer = new FileWriter(file,true);
-        int size=archive.size();
-        for(int i=0; i<size; ++i){
-          String s=archive.get(i).toWrite();
-          writer.write(s);
-          writer.flush();
-        }
-        writer.close();
-      } catch (IOException e){
-        System.out.println ("Erreur " + e.getMessage());
-      }
-    }
-    else{
+      file.delete();
       try{
         if(file.createNewFile()){
-          System.out.println ("Création du fichier de tâches archivées, on rempli..");
           try{
             FileWriter writer = new FileWriter(file);
             int size=archive.size();
@@ -202,6 +187,9 @@ public class CollectionTache
   public int nbArchive(){
      return archive.size();
   }
+  public Tache getArchive(int i){
+     return archive.get(i);
+  }
   public void archiver_Tache(int i){
     if(!archive.contains(getTache(i))){
       archive.add(getTache(i));
@@ -212,19 +200,44 @@ public class CollectionTache
     return codex.get(i).isLineaire();
   }
 
-  /*
+
   //rempli archive des tâches échues non archivées du codex
-  public void start_archivage(){
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    Date dateJour = new Date();
-    int size=codex.size();
-    for(int i=0;i<size;++i){
-      if(getEcheance(i).after(dateJour)){
-        archiver_Tache(i);
+  public void start_archives(){
+    String filePath = "./todoList/taches_archivees";
+    File file = new File(filePath);
+    if(file.exists()){
+      System.out.println("Initialisation de nos tâches archivées...");
+      try{
+        Scanner scanner=new Scanner(new File(filePath));
+        while(scanner.hasNextLine()){
+          String title = scanner.nextLine();
+          String line = scanner.nextLine();
+          StringTokenizer st = new StringTokenizer(line);
+
+          String dd=st.nextToken();
+          String df=st.nextToken();
+          String cat=st.nextToken();
+
+          SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+          try{
+            if(st.hasMoreTokens()){
+              String avance=st.nextToken();
+              archive.add(new TacheLongCours(formatter.parse(dd), formatter.parse(df), title, cat, Integer.parseInt(avance)));
+            }
+            else{
+              archive.add(new TachePonctuelle(formatter.parse(dd), formatter.parse(df), title, cat));
+            }
+          }catch(ParseException err){
+            err.printStackTrace();
+          }
+        }
+        scanner.close();
+      }catch(FileNotFoundException fnf){
+        fnf.printStackTrace();
       }
     }
   }
-
+  /*
   public void afficheCodex()
   {
     int size=codex.size();

@@ -5,10 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.lang.String;
 
-/*
-ArchiverTache permet la suppression d'une tâche après confirmation du client
-Au clic on retire la tache de notre collection et on crée/append taches_archivees
-*/
+
 public class ArchiverTache extends JFrame
 {
 	protected JPanel p;
@@ -20,7 +17,7 @@ public class ArchiverTache extends JFrame
 		setTitle("jArchiverTache");
 		p = new JPanel();
 		add(p);
-		p.setPreferredSize(new Dimension(350,200));
+		p.setPreferredSize(new Dimension(350,100));
 		p.setLayout(new FlowLayout());
 
 		l1 = new JLabel("Etes vous sur de vouloir archiver cette tâche ?");

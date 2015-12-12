@@ -7,10 +7,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.util.Date;
 
-/*
-TodoList gère l'affichage de notre Collection ainsi que l'interaction
-avec celles-ci via 4 boutons : Ajout, Modifier, Archiver et Supprimer
-*/
 
 public class TodoList extends JFrame implements WindowListener
 {

@@ -5,10 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.lang.String;
 
-/*
-SupprimerTache permet la suppression d'une tâche après demande et confirmation du client
-Au clic on retire la tache de notre collection et on crée/append taches_archivees
-*/
+
 public class SupprimerTache extends JFrame
 {
 	protected JPanel p;
@@ -49,5 +46,4 @@ public class SupprimerTache extends JFrame
 
 		pack();
 	}
-
 }
