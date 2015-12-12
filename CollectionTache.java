@@ -225,7 +225,6 @@ public class CollectionTache
       retrait(i);
     }
   }
-
   public boolean isLineaire(int i){
     return codex.get(i).isLineaire();
   }

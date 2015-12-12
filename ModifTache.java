@@ -10,8 +10,7 @@ import java.text.ParseException;
 
 /*
 ModifTache permet la création d'une nouvelle tâche via
-une Fenêtre contenant 3 ou 4 champs initialisés (titre, categorie, debut et? fin)
-A la fermeture de la fenêtre on écrase la tache d'origine pour une nouvelle tache
+une Fenêtre contenant 4 ou 5 champs initialisés (titre, categorie, debut, fin et? avancement)
 */
 public class ModifTache extends JFrame
 {
@@ -70,12 +69,15 @@ public class ModifTache extends JFrame
 				if(isThere()){
 					c.set_titre(fetch_titre());
 					c.set_categorie(fetch_categorie());
-					c.set_debut(fetch_deb());
-					c.set_echeance(fetch_fin());
-					if(isLongCours){
-						c.setAvancement(fetch_avancement());
+					if(test_dates_valides()){
+						c.set_debut(fetch_deb());
+						c.set_echeance(fetch_fin());
 					}
-					System.out.println("Tache modifiée : "+c.toString());
+					if(isLongCours){
+						int k=fetch_avancement();
+						if(k>c.get_avancement() && k<101)
+							c.setAvancement(k);
+					}
 					dispose();
 				}
 			}
@@ -108,6 +110,14 @@ public class ModifTache extends JFrame
 		return date.matches(regex_date);
 	}
 
+	public boolean test_dates_valides(){
+		Date dd, df;
+		dd=fetch_deb();
+		df=fetch_fin();
+
+		return dd.before(df);
+	}
+
 	public String fetch_titre(){
 		String titre=t1.getText();
 		if(titre.equals("")){
@@ -128,7 +138,6 @@ public class ModifTache extends JFrame
 	public Date fetch_deb(){
 		String dd_valide=t3.getText();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date deb;
 		try{
 			if(test_date(dd_valide)){
 				return formatter.parse(dd_valide);

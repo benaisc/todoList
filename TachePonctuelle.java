@@ -2,7 +2,9 @@ package todoList;
 
 import java.lang.String;
 import java.util.Date;
+import java.util.Calendar;
 import java.text.SimpleDateFormat;
+
 
 public class TachePonctuelle extends Tache
 {
@@ -17,9 +19,11 @@ public class TachePonctuelle extends Tache
   }
 
   public void setAvancement(int pourcentage){ }
-  public boolean isLineaire(){
-    Date dday=new Date();
-    return dday.before(echeance);
+
+  public boolean isLineaire()
+  {
+    Calendar dj = Calendar.getInstance();
+    return echeance.after(dj.getTime());
   }
 
   public String toWrite()
@@ -31,6 +35,7 @@ public class TachePonctuelle extends Tache
 
     return s;
   }
+
   public String toString()
   {
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

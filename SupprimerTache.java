@@ -6,29 +6,29 @@ import javax.swing.*;
 import java.lang.String;
 
 /*
-ArchiverTache permet la suppression d'une tâche après confirmation du client
+SupprimerTache permet la suppression d'une tâche après demande et confirmation du client
 Au clic on retire la tache de notre collection et on crée/append taches_archivees
 */
-public class ArchiverTache extends JFrame
+public class SupprimerTache extends JFrame
 {
 	protected JPanel p;
 	protected JLabel l1;
   protected JButton b1;
 
-	public ArchiverTache(CollectionTache c, int i)
+	public SupprimerTache(CollectionTache c, int i)
 	{
-		setTitle("jArchiverTache");
+		setTitle("jSupprimerTache");
 		p = new JPanel();
 		add(p);
-		p.setPreferredSize(new Dimension(350,200));
+		p.setPreferredSize(new Dimension(350,100));
 		p.setLayout(new FlowLayout());
 
-		l1 = new JLabel("Etes vous sur de vouloir archiver cette tâche ?");
+		l1 = new JLabel("Etes vous sur de vouloir supprimer cette tâche ?");
 		p.add(l1);
 		b1 = new JButton("Confirmer");
 		b1.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
-					c.archiver_Tache(i);
+					c.retrait(i);
 					dispose();
 			}
 		});
@@ -36,15 +36,15 @@ public class ArchiverTache extends JFrame
 
 		pack();
 	}
-	public ArchiverTache(){
-		setTitle("jArchiverTache");
+	public SupprimerTache(){
+		setTitle("jSupprimerTache");
 		p = new JPanel();
 		add(p);
 		p.setPreferredSize(new Dimension(300,100));
 		p.setBackground(Color.red);
 		p.setLayout(new FlowLayout());
 
-		l1 = new JLabel("Selectionnez une tache à archiver");
+		l1 = new JLabel("Selectionnez une tache à supprimer");
 		p.add(l1);
 
 		pack();

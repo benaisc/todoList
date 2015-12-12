@@ -6,15 +6,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.util.Date;
+
 /*
 TodoList gère l'affichage de notre Collection ainsi que l'interaction
-avec celles-ci via 3 boutons : Ajout, Modifier, Archiver
+avec celles-ci via 4 boutons : Ajout, Modifier, Archiver et Supprimer
 */
 
 public class TodoList extends JFrame implements WindowListener
 {
 	private JPanel pGauche, pDroite;
-	private JButton b1,b2,b3;
+	private JButton b1,b2,b3,b4,b5;
 	private JTable table;
 	private JScrollPane scrollpane;
 	private CollectionTache collec;
@@ -54,16 +55,17 @@ public class TodoList extends JFrame implements WindowListener
 		pack();
 	}
 
-	public void init_taches(boolean affich){
+	public void init_taches(boolean affich)
+	{
 		int nbTaches=collec.nbTaches();
 		if(nbTaches>0){
 			table=new JTable(new DefaultTableModel(nbTaches, 1){
 				//On rend les cellules non éditables
 				public boolean isCellEditable(int row, int column){return false;}
-			}){
+			})
+			{
 				public Component prepareRenderer(TableCellRenderer rend, int row, int col){
 					Component compo = super.prepareRenderer(rend,row,col);
-					//Objet value = getModel().getValueAt(row,col);
 					Date dateJour = new Date();
 					if(getSelectedRow() == row){
 						if(!collec.isLineaire(row)){
@@ -75,7 +77,8 @@ public class TodoList extends JFrame implements WindowListener
 					}
 					return compo;
 				}
-			};
+			};//Fin override méthodes JTable & DefaultTableModel
+
 			scrollpane=new JScrollPane(table);
 			if(nbTaches>0){
 				for(int i=0; i<nbTaches; i++){
@@ -182,9 +185,48 @@ public class TodoList extends JFrame implements WindowListener
 			}
 		});
 
+		b4 = new JButton("Supprimer");
+		b4.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				int[] selection = table.getSelectedRows();
+				int selected = selection.length;
+				for (int i = 0; i < selected; i++) {
+					selection[i] = table.convertRowIndexToModel(selection[i]);
+				}
+
+				if(selected==0 || selected>1){
+					SupprimerTache a=new SupprimerTache();
+					a.setVisible(true);
+				}
+				else{
+					SupprimerTache a=new SupprimerTache(collec,selection[0]);
+					a.addWindowListener(new WindowAdapter(){
+						public void windowClosed(WindowEvent e){
+							pDroite.removeAll();
+							init_taches(false);
+							pack();
+							a.dispose();
+						}
+					});
+					a.setVisible(true);
+				}
+			}
+		});
+
+		b5 = new JButton("Bilan");
+		b5.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				BilanTache a=new BilanTache(collec);
+				a.setVisible(true);
+			}
+		});
+
 		pGauche.add(b1);
 		pGauche.add(b2);
 		pGauche.add(b3);
+		pGauche.add(b4);
+		pGauche.add(b5);
+
 		pack();
 		System.out.println("Init_Boutons OK");
 	}

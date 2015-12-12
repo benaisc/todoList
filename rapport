@@ -10,7 +10,7 @@ I- Description d'implémentation
 			de manière invisible pour nôtre collection de tâches.
 
 		-CollectionTache :
-			La classe permettant de gérer l'ensemble des tâches.
+			La classe permettant de gérer l'ensemble de tâches.
 
 	Partie Graphique :
 		-TodoList :
@@ -21,23 +21,33 @@ I- Description d'implémentation
 
 		-CreerTache :
 			Une fenêtre contenant les différents champs nécessaire à l'instanciation d'une tâche
-			Un bouton permettant la création d'une nouvelle tache pour notre CollectionTache
+			Des expressions régulières ont été utilisées pour vérifier le contenu entré dans les champs;
+			Une tache n'est valide que si ses dates sont valides;
+			Un bouton ajoutant la tâche validée dans un Array (qui sera retourné à la fermeture de l'instance CreerTache)
 
 		-ModifTache :
-			Une fenêtre contenant une liste cliquable des titres de nos taches initialisant les différents champs nécessaire à la modification de la tâche
-			Un bouton permettant la validation de la modification
+			Une fenêtre contenant les différents champs initialisés d'une tâche laissant libre sa modification complète
+			Un bouton permettant la validation ds modifications
 
-		-TacheArchive :
+		-ArchiverTache :
+			Une fenêtre de confirmation
+			Une tache archivée disparait de la liste de choses à faire et est écrite dans un fichier de sérialization
+
+		-SupprimerTache
+			Une fenêtre de confirmation
+			Suppression (définitive) de la tache de la liste des choses à faire
 
 
 II- Choix effectués
 	Partie Metier :
 		-Categorisation : sujet respecté
 
-
 		-Retard
-			Le retard d'une tâche est représenté à l'affichage, onClick(redBackGround)
+			Le retard d'une tâche (le jour suivant l'échéance) est représenté à l'affichage, onClick(redBackGround)
 
+		-Archivage
+			L'archivage d'une tache ne s'effectue qu'après demande et confirmation du client
+			La tâche est alors sérializée dans un fichier texte
 
 		-Serialization
 			J'ai effectué la serialization dans un fichier texte, les données y sont représentées ainsi:
@@ -48,9 +58,11 @@ II- Choix effectués
 			...etc
 
 
-		-Archivage
-			L'archivage d'une tache ne s'effectue qu'après demande et confirmation du client
-			La tâche est alors sérializée dans un fichier texte
-
-
 III- Améliorations
+	La gestion des taches_archivees
+
+	echeance>datedeb
+	avancement STRICT croissant
+	avancement == 100 -> archiver
+
+	Une améliorations des tri est à apporter;

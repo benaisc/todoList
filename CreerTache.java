@@ -76,25 +76,23 @@ public class CreerTache extends JFrame
 				String regex_date="^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\\d\\d$";
 				String dd=t3.getText();
 				String df=t4.getText();
-				if(!dd.matches(regex_date)){
+				if(!test_date(dd)){
 					verify=false;
 				}
-				if(!df.matches(regex_date)){
+				if(!test_date(df)){
 					verify=false;
 				}
-
+				if(!test_dates_valides()){
+					verify=false;
+				}
 				//Ssi les champs date sont valides
 				if(verify){
 					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-					try{
-						if(!chk.isSelected()){
-							t.add(new TachePonctuelle(formatter.parse(dd), formatter.parse(df), titr, oneWordCat));
-						}
-						else{
-							t.add(new TacheLongCours(formatter.parse(dd), formatter.parse(df), titr, oneWordCat));
-						}
-					}catch(ParseException err){
-						err.printStackTrace();
+					if(!chk.isSelected()){
+						t.add(new TachePonctuelle(fetch_deb(), fetch_fin(), titr, oneWordCat));
+					}
+					else{
+						t.add(new TacheLongCours(fetch_deb(), fetch_fin(), titr, oneWordCat));
 					}
 					t1.setText("");
 					t2.setText("");
@@ -114,6 +112,52 @@ public class CreerTache extends JFrame
 
 	public boolean isThere(){
 		return t.size()>0;
+	}
+
+	public boolean test_date(String date){
+		//match : dd/mm/yyyy
+		String regex_date="^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)\\d\\d$";
+		return date.matches(regex_date);
+	}
+
+	public boolean test_dates_valides(){
+		Date dd, df;
+		dd=fetch_deb();
+		df=fetch_fin();
+
+		return dd.before(df);
+	}
+
+	public Date fetch_deb(){
+		String dd_valide=t3.getText();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try{
+			if(test_date(dd_valide)){
+				return formatter.parse(dd_valide);
+			}
+			else{
+				return new Date();
+			}
+		}catch(ParseException err){
+			err.printStackTrace();
+			return new Date();
+		}
+	}
+
+	public Date fetch_fin(){
+		String df_valide=t4.getText();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try{
+			if(test_date(df_valide)){
+				return formatter.parse(df_valide);
+			}
+			else{
+				return new Date();
+			}
+		}catch(ParseException err){
+			err.printStackTrace();
+			return new Date();
+		}
 	}
 
 	public ArrayList<Tache> fetch(){
