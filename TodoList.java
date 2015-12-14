@@ -39,6 +39,7 @@ public class TodoList extends JFrame implements WindowListener
 		//Fin de vie de l'application
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
+				System.out.println("Fin de l'execution..");
 				if(collec.nbTaches()>0){
 					collec.close_Tache();
 				if(collec.nbArchive()>0)
